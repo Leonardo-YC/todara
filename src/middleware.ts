@@ -1,33 +1,41 @@
+import NextAuth from 'next-auth';
+import { authConfig } from '@/lib/auth/auth.config';
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth/auth';
+
+// Inicializamos NextAuth solo con la config ligera para el Edge
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
   const isAuthenticated = !!req.auth;
 
-  // Rutas que cualquiera puede ver (Públicas)
+  // Rutas públicas
   const publicRoutes = ['/', '/auth/signin', '/auth/verify', '/auth/error'];
-  // Rutas de API públicas
   const publicApiRoutes = ['/api/auth', '/api/health'];
 
-  // Si es ruta pública, dejar pasar
-  if (publicRoutes.some((route) => pathname.startsWith(route)) || 
-      publicApiRoutes.some((route) => pathname.startsWith(route))) {
+  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
+  const isPublicApiRoute = publicApiRoutes.some((route) => pathname.startsWith(route));
+
+  // Si es ruta pública, permitimos el paso
+  if (isPublicRoute || isPublicApiRoute) {
     return NextResponse.next();
   }
 
-  // Si intenta entrar a la API de todos sin estar logueado -> Error 401
+  // Protección de rutas API
   if (pathname.startsWith('/api/') && !isAuthenticated) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Si intenta entrar a cualquier otra página protegida sin login -> Redirigir a login
-  // (Opcional: NextAuth suele manejar esto, pero el middleware da doble seguridad)
-  
+  // Protección de rutas privadas (si no es pública y no está autenticado)
+  // Nota: NextAuth suele redirigir, pero esto fuerza la seguridad
+  /* if (!isAuthenticated && !isPublicRoute) {
+     return NextResponse.redirect(new URL('/auth/signin', req.url));
+  }
+  */
+
   return NextResponse.next();
 });
 
-// Configuración: A qué rutas aplica el middleware
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };

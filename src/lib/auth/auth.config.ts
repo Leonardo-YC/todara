@@ -1,34 +1,13 @@
-/**
- * NextAuth.js configuration
- * Using email magic links for authentication
- */
-
 import type { NextAuthConfig } from 'next-auth';
-import EmailProvider from 'next-auth/providers/email';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import { prisma } from '@/lib/db/prisma';
 
+// Esta configuración es segura para el Edge (Middleware)
 export const authConfig: NextAuthConfig = {
-  adapter: PrismaAdapter(prisma),
+  // Dejamos providers vacío aquí para evitar errores de Node.js en el Edge
+  providers: [], 
   
-  providers: [
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: Number(process.env.EMAIL_SERVER_PORT),
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
-      },
-      from: process.env.EMAIL_FROM,
-      maxAge: 24 * 60 * 60, // 24 hours
-    }),
-  ],
-
   session: {
     strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, // 30 días
   },
 
   pages: {
@@ -46,21 +25,20 @@ export const authConfig: NextAuthConfig = {
     },
     async jwt({ token, user }) {
       if (user) {
-        // El signo de exclamación (!) le dice a TS que confiamos en que el ID existe
-        token.sub = user.id!; 
+        token.sub = user.id!;
       }
       return token;
     },
-  },
+    authorized({ auth, request: { nextUrl } }) {
+      // Lógica de protección de rutas (Middleware)
+      const isLoggedIn = !!auth?.user;
+      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard'); // Ejemplo
+      
+      // Permitir acceso a la API de Auth siempre
+      if (nextUrl.pathname.startsWith('/api/auth')) return true;
 
-  // Eventos para logging simple en desarrollo
-  events: {
-    async signIn({ user, isNewUser }) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log('User signed in:', user.email, 'New user:', isNewUser);
-      }
+      // Aquí puedes agregar más lógica si la necesitas
+      return true; 
     },
   },
-
-  debug: process.env.NODE_ENV === 'development',
 };
