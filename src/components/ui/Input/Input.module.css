@@ -1,0 +1,67 @@
+.container {
+    width: 100%;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  
+  .inputWrapper {
+    position: relative;
+  }
+  
+  .input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 2px solid var(--color-border);
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: inherit;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: var(--color-primary-600);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); /* Sutil halo azul */
+  }
+  
+  .input:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: var(--color-bg-secondary);
+  }
+  
+  /* Error State */
+  .inputError {
+    border-color: var(--color-danger-500);
+  }
+  .inputError:focus {
+    border-color: var(--color-danger-500);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); /* Sutil halo rojo */
+  }
+  
+  /* Character Count */
+  .counter {
+    margin-top: 0.25rem;
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+  
+  .counterWarning {
+    color: var(--color-danger-500);
+    font-weight: 600;
+  }
+  
+  .errorMessage {
+    margin-top: 0.375rem;
+    font-size: 0.875rem;
+    color: var(--color-danger-500);
+  }
