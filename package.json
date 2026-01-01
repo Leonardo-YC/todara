@@ -12,13 +12,17 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
     "@prisma/client": "5.10.2",
+    "@upstash/ratelimit": "^2.0.7",
+    "@upstash/redis": "^1.36.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "isomorphic-dompurify": "^2.35.0",
     "next": "14.2.0",
     "next-auth": "5.0.0-beta.25",
     "nodemailer": "^6.9.13",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zod": "^4.3.4"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -27,6 +31,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.0",
+    "msw": "^2.12.7",
     "prisma": "5.10.2",
     "ts-node": "^10.9.2",
     "typescript": "^5"
