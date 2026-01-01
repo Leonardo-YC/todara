@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { APP_NAME, APP_DESCRIPTION } from '@/lib/constants';
-import { TodoProvider } from '@/components/providers'; // Importamos el Provider
+import { TodoProvider } from '@/components/providers';
+import { Header } from '@/components/layout/Header/Header'; // <-- Nuevo Import
 import styles from './layout.module.css';
 import './globals.css';
 
@@ -23,11 +24,18 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.variable} ${styles.body}`}>
-        {/* Envolvemos la app con el Provider de Estado Global */}
         <TodoProvider>
-          <main className={styles.main}>
+          {/* El Header ya incluye el SkipLink internamente */}
+          <Header locale="es" />
+          
+          {/* IMPORTANTE: id="main-content" para que el SkipLink funcione */}
+          <main id="main-content" className={styles.main}>
             {children}
           </main>
+          
+          <footer role="contentinfo" style={{ padding: '2rem', textAlign: 'center', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+            <p>Todara - Accesibilidad Primero ❤️</p>
+          </footer>
         </TodoProvider>
       </body>
     </html>
