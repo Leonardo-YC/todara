@@ -1,0 +1,28 @@
+.nav {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background-color: #f3f4f6;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tab {
+    flex: 1;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: #4b5563;
+    transition: all 0.2s;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  
+  .active {
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
