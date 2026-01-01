@@ -17,7 +17,7 @@ export interface TodoFormData {
   dueDate: Date | null;
 }
 
-// --- Props de Componentes (Esto es lo que te faltaba) ---
+// --- Props de Componentes ---
 
 export interface TodoFormProps {
   onSubmit: (data: TodoFormData) => Promise<void>;
@@ -41,13 +41,35 @@ export interface TodoListProps {
   isLoading?: boolean;
 }
 
+// CORRECCIÓN AQUÍ: Agregamos 'counts'
 export interface TodoFiltersProps {
   currentFilter: TodoFilter;
   onChange: (filter: TodoFilter) => void;
+  counts: {
+    all: number;
+    active: number;
+    completed: number;
+  };
 }
 
 export interface TodoFooterProps {
   activeCount: number;
   completedCount: number;
   onClearCompleted: () => void;
+}
+
+// --- Context Type (Fase 6) ---
+
+export interface TodoContextType {
+  todos: Todo[];
+  filter: TodoFilter;
+  isLoading: boolean;
+  error: string | null;
+  isOnline: boolean;
+  addTodo: (data: TodoFormData) => Promise<void>;
+  updateTodo: (id: string, updates: Partial<Todo>) => Promise<void>;
+  deleteTodo: (id: string) => Promise<void>;
+  toggleTodo: (id: string) => Promise<void>;
+  setFilter: (filter: TodoFilter) => void;
+  clearCompleted: () => Promise<void>;
 }
