@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+test-results/
+playwright-report/
+playwright/.cache/
 
 # next.js
 /.next/
@@ -19,10 +22,12 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
 *.pem
+Thumbs.db
 
 # debug
 npm-debug.log*
@@ -30,8 +35,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files (IMPORTANTE: ignora tus claves reales, pero deja subir el ejemplo)
 .env*
+!.env.example
+!.env.test
 
 # vercel
 .vercel
@@ -39,3 +46,23 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Storybook (Documentación de componentes)
+storybook-static/
+
+# PWA (Archivos generados automáticamente que no deben subirse)
+/public/sw.js
+/public/workbox-*.js
+/public/worker-*.js
+/public/sw.js.map
+/public/workbox-*.js.map
+/public/worker-*.js.map
+
+# Sentry & Logs
+.sentryclirc
+logs
+*.log
+
+# IDE
+.vscode/
+.idea/
