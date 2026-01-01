@@ -1,0 +1,48 @@
+.item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    transition: box-shadow 0.2s;
+    list-style: none;
+  }
+  
+  .item:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .text {
+    font-size: 1rem;
+    color: #111827;
+    word-break: break-word;
+    margin: 0;
+  }
+  
+  .completedText {
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+  
+  .meta {
+    margin-top: 0.5rem;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  
+  .item:hover .actions,
+  .item:focus-within .actions {
+    opacity: 1;
+  }
