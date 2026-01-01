@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google'; // Cambiamos Geist por Inter
+import { Inter } from 'next/font/google';
 import { APP_NAME, APP_DESCRIPTION } from '@/lib/constants';
+import { TodoProvider } from '@/components/providers'; // Importamos el Provider
 import styles from './layout.module.css';
 import './globals.css';
 
-// Usamos Inter en lugar de Geist
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
@@ -22,11 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      {/* Aplicamos la variable de fuente Inter y los estilos del module */}
       <body className={`${inter.variable} ${styles.body}`}>
-        <main className={styles.main}>
-          {children}
-        </main>
+        {/* Envolvemos la app con el Provider de Estado Global */}
+        <TodoProvider>
+          <main className={styles.main}>
+            {children}
+          </main>
+        </TodoProvider>
       </body>
     </html>
   );
