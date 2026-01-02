@@ -1,5 +1,5 @@
 /**
- * LanguageToggle - Selector de idioma accesible
+ * LanguageToggle - Selector de idioma funcional
  */
 'use client';
 
@@ -16,12 +16,28 @@ export function LanguageToggle({ currentLocale }: LanguageToggleProps) {
   const pathname = usePathname();
 
   const handleLocaleChange = (newLocale: Locale) => {
-    console.log(`Cambiando idioma a: ${newLocale}`);
-    // Aquí iría la lógica real de cambio de ruta en el futuro
+    // Si ya estamos en ese idioma, no hacemos nada
+    if (newLocale === currentLocale) return;
+
+    // 1. Quitamos el locale actual de la URL (ej: /es/dashboard -> /dashboard)
+    // El regex /^\/(en|es)/ busca si empieza con /en o /es y lo elimina
+    const pathWithoutLocale = pathname.replace(/^\/(en|es)/, '');
+
+    // 2. Aseguramos que el path empiece con /
+    const cleanPath = pathWithoutLocale.startsWith('/') 
+      ? pathWithoutLocale 
+      : `/${pathWithoutLocale}`;
+    
+    // 3. Navegamos al nuevo idioma
+    router.push(`/${newLocale}${cleanPath}`);
   };
 
   return (
-    <div role="radiogroup" aria-label="Cambiar idioma" className={styles.container}>
+    <div 
+      role="radiogroup" 
+      aria-label={currentLocale === 'en' ? 'Change language' : 'Cambiar idioma'} 
+      className={styles.container}
+    >
       <button
         role="radio"
         aria-checked={currentLocale === 'en'}
