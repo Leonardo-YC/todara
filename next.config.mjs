@@ -1,7 +1,48 @@
 import createNextIntlPlugin from 'next-intl/plugin';
+import withPWAInit from 'next-pwa';
 
-// Inicializamos el plugin apuntando al archivo i18n.ts
+// 1. Configuración de i18n
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
+
+// 2. Configuración de PWA
+const withPWA = withPWAInit({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development', // Desactivar en desarrollo
+  buildExcludes: [/middleware-manifest\.json$/],
+  runtimeCaching: [
+    {
+      // Cachear Google Fonts
+      urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'google-fonts',
+        expiration: { maxEntries: 4, maxAgeSeconds: 365 * 24 * 60 * 60 },
+      },
+    },
+    {
+      // Cachear Archivos Estáticos (JS, CSS, Imágenes)
+      urlPattern: /\.(?:eot|otf|ttc|ttf|woff|woff2|font.css|jpg|jpeg|gif|png|svg|ico|webp|js|css)$/i,
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'static-assets',
+        expiration: { maxEntries: 64, maxAgeSeconds: 24 * 60 * 60 },
+      },
+    },
+    {
+      // Cachear API (NetworkFirst: Intenta internet, si falla usa caché)
+      urlPattern: /\/api\/todos.*/i,
+      handler: 'NetworkFirst',
+      method: 'GET',
+      options: {
+        cacheName: 'api-cache',
+        expiration: { maxEntries: 16, maxAgeSeconds: 5 * 60 }, // 5 minutos
+        networkTimeoutSeconds: 10,
+      },
+    },
+  ],
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,7 +53,7 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
 
-  // Tus headers de seguridad (Los mantenemos intactos)
+  // Headers de seguridad (TUS HEADERS ORIGINALES)
   async headers() {
     return [
       {
@@ -30,5 +71,5 @@ const nextConfig = {
   },
 };
 
-// Exportamos la configuración envuelta en withNextIntl
-export default withNextIntl(nextConfig);
+// 3. Exportación combinada: PWA -> i18n -> Config
+export default withPWA(withNextIntl(nextConfig));
