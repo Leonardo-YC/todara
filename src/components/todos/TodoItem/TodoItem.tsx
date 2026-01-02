@@ -1,5 +1,7 @@
 'use client';
+
 import React, { useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl'; // <--- Importamos hooks de traducción
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
@@ -17,13 +19,18 @@ export interface TodoItemProps {
   onToggle: (id: string) => void;
   onEdit: (id: string, text: string) => void;
   onDelete: (id: string) => void;
-  locale?: 'en' | 'es';
+  // locale ya no es necesario como prop porque usamos el hook, pero lo dejamos opcional para compatibilidad
+  locale?: string;
 }
 
-export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onEdit, onDelete, locale = 'es' }) => {
+export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(todo.text);
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  // Hooks para traducción y fecha
+  const tDate = useTranslations('dueDate'); // Usamos tu sección existente 'dueDate'
+  const currentLocale = useLocale();
 
   const handleSave = () => {
     if (validateTodoText(editText)) {
@@ -33,6 +40,13 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onEdit, onDe
   };
 
   const isDueDateOverdue = todo.dueDate ? isOverdue(todo.dueDate) : false;
+
+  // Preparamos las traducciones para la función de fecha
+  const dateTranslations = {
+    today: tDate('today'),
+    tomorrow: tDate('tomorrow'),
+    yesterday: tDate('yesterday')
+  };
 
   return (
     <>
@@ -63,7 +77,8 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onEdit, onDe
                 <div className={styles.meta}>
                   <Badge variant={isDueDateOverdue ? 'danger' : 'default'}>
                     {isDueDateOverdue && '⚠️ '}
-                    {getRelativeTime(todo.dueDate, locale)}
+                    {/* Pasamos los 3 argumentos: fecha, traducciones, e idioma */}
+                    {getRelativeTime(todo.dueDate, dateTranslations, currentLocale as any)}
                   </Badge>
                 </div>
               )}
