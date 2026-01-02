@@ -1,15 +1,19 @@
 'use client';
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
-import type { TodoFiltersProps } from '@/types';
+import type { TodoFiltersProps, TodoFilter } from '@/types';
 import styles from './TodoFilters.module.css';
 
 export const TodoFilters: React.FC<TodoFiltersProps> = ({ currentFilter, onChange }) => {
-  const filters = [
-    { value: 'all', label: 'Todos' },
-    { value: 'active', label: 'Activos' },
-    { value: 'completed', label: 'Completados' },
-  ] as const;
+  const t = useTranslations('filters');
+
+  // Definimos los filtros usando las traducciones
+  const filters: { value: TodoFilter; label: string }[] = [
+    { value: 'all', label: t('all') },
+    { value: 'active', label: t('active') },
+    { value: 'completed', label: t('completed') },
+  ];
 
   return (
     <nav className={styles.nav}>
