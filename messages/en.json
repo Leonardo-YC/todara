@@ -1,0 +1,120 @@
+{
+    "app": {
+      "title": "TodoPerfect",
+      "description": "The perfect todo app - demonstrating excellence in fundamentals",
+      "tagline": "Manage your tasks efficiently"
+    },
+    "todo": {
+      "addPlaceholder": "What needs to be done?",
+      "addButton": "Add",
+      "add": "Add Todo",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "markComplete": "Mark as complete",
+      "markIncomplete": "Mark as incomplete",
+      "completed": "Completed",
+      "active": "Active",
+      "noTodos": "No todos yet. Add one above!",
+      "noActiveTodos": "All done! 🎉",
+      "noCompletedTodos": "No completed todos yet"
+    },
+    "filters": {
+      "all": "All",
+      "active": "Active",
+      "completed": "Completed",
+      "showAll": "Show all todos",
+      "showActive": "Show active todos",
+      "showCompleted": "Show completed todos"
+    },
+    "footer": {
+      "itemsLeft": {
+        "one": "{count} item left",
+        "other": "{count} items left"
+      },
+      "clearCompleted": "Clear completed",
+      "noItems": "No items"
+    },
+    "modals": {
+      "deleteTodo": {
+        "title": "Delete todo?",
+        "message": "Are you sure you want to delete '{text}'?",
+        "messageGeneric": "Are you sure you want to delete this todo?",
+        "confirm": "Delete",
+        "cancel": "Cancel"
+      },
+      "clearCompleted": {
+        "title": "Clear completed todos?",
+        "message": "This will delete {count} completed {count, plural, one {todo} other {todos}}.",
+        "confirm": "Clear All",
+        "cancel": "Cancel"
+      }
+    },
+    "dueDate": {
+      "label": "Due date",
+      "due": "Due {date}",
+      "overdue": "Overdue",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "yesterday": "Yesterday",
+      "addDueDate": "Add due date",
+      "removeDueDate": "Remove due date",
+      "selectDate": "Select date"
+    },
+    "errors": {
+      "todoEmpty": "Todo cannot be empty",
+      "todoTooLong": "Todo exceeds maximum length of {max} characters",
+      "loadFailed": "Failed to load todos",
+      "createFailed": "Failed to create todo",
+      "updateFailed": "Failed to update todo",
+      "deleteFailed": "Failed to delete todo",
+      "networkError": "Network error. Please check your connection.",
+      "serverError": "Server error. Please try again later.",
+      "unauthorized": "You must be logged in to perform this action"
+    },
+    "success": {
+      "todoCreated": "Todo created successfully",
+      "todoUpdated": "Todo updated successfully",
+      "todoDeleted": "Todo deleted successfully",
+      "todosCleared": "{count} {count, plural, one {todo} other {todos}} cleared"
+    },
+    "a11y": {
+      "skipToMain": "Skip to main content",
+      "changeLanguage": "Change language",
+      "todoList": "Todo list",
+      "newTodo": "New todo input",
+      "loading": "Loading",
+      "loadingTodos": "Loading todos",
+      "closeModal": "Close dialog",
+      "editTodo": "Edit '{text}'",
+      "deleteTodo": "Delete '{text}'",
+      "toggleTodo": "Mark '{text}' as {completed, select, true {incomplete} other {complete}}"
+    },
+    "offline": {
+      "title": "You're offline",
+      "message": "Your changes will sync when you're back online",
+      "banner": "You're offline. Changes will sync when connection returns."
+    },
+    "validation": {
+      "required": "This field is required",
+      "minLength": "Must be at least {min} characters",
+      "maxLength": "Must be no more than {max} characters",
+      "invalidDate": "Invalid date format",
+      "pastDate": "Date cannot be in the past"
+    },
+    "common": {
+      "close": "Close",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "add": "Add",
+      "loading": "Loading...",
+      "error": "Error",
+      "success": "Success",
+      "retry": "Retry",
+      "back": "Back"
+    }
+  }

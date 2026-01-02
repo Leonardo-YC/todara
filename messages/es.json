@@ -1,0 +1,120 @@
+{
+    "app": {
+      "title": "TodoPerfect",
+      "description": "La aplicación perfecta de tareas - demostrando excelencia en los fundamentos",
+      "tagline": "Gestiona tus tareas eficientemente"
+    },
+    "todo": {
+      "addPlaceholder": "¿Qué necesitas hacer?",
+      "addButton": "Agregar",
+      "add": "Agregar Tarea",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "markComplete": "Marcar como completada",
+      "markIncomplete": "Marcar como pendiente",
+      "completed": "Completada",
+      "active": "Activa",
+      "noTodos": "No hay tareas aún. ¡Agrega una arriba!",
+      "noActiveTodos": "¡Todo listo! 🎉",
+      "noCompletedTodos": "No hay tareas completadas aún"
+    },
+    "filters": {
+      "all": "Todas",
+      "active": "Activas",
+      "completed": "Completadas",
+      "showAll": "Mostrar todas las tareas",
+      "showActive": "Mostrar tareas activas",
+      "showCompleted": "Mostrar tareas completadas"
+    },
+    "footer": {
+      "itemsLeft": {
+        "one": "{count} tarea pendiente",
+        "other": "{count} tareas pendientes"
+      },
+      "clearCompleted": "Limpiar completadas",
+      "noItems": "No hay tareas"
+    },
+    "modals": {
+      "deleteTodo": {
+        "title": "¿Eliminar tarea?",
+        "message": "¿Estás seguro de eliminar '{text}'?",
+        "messageGeneric": "¿Estás seguro de eliminar esta tarea?",
+        "confirm": "Eliminar",
+        "cancel": "Cancelar"
+      },
+      "clearCompleted": {
+        "title": "¿Limpiar tareas completadas?",
+        "message": "Esto eliminará {count} {count, plural, one {tarea} other {tareas}} completadas.",
+        "confirm": "Limpiar Todas",
+        "cancel": "Cancelar"
+      }
+    },
+    "dueDate": {
+      "label": "Fecha de vencimiento",
+      "due": "Vence {date}",
+      "overdue": "Vencida",
+      "today": "Hoy",
+      "tomorrow": "Mañana",
+      "yesterday": "Ayer",
+      "addDueDate": "Agregar fecha de vencimiento",
+      "removeDueDate": "Quitar fecha de vencimiento",
+      "selectDate": "Seleccionar fecha"
+    },
+    "errors": {
+      "todoEmpty": "La tarea no puede estar vacía",
+      "todoTooLong": "La tarea excede el máximo de {max} caracteres",
+      "loadFailed": "Error al cargar las tareas",
+      "createFailed": "Error al crear la tarea",
+      "updateFailed": "Error al actualizar la tarea",
+      "deleteFailed": "Error al eliminar la tarea",
+      "networkError": "Error de red. Por favor verifica tu conexión.",
+      "serverError": "Error del servidor. Por favor intenta de nuevo más tarde.",
+      "unauthorized": "Debes iniciar sesión para realizar esta acción"
+    },
+    "success": {
+      "todoCreated": "Tarea creada exitosamente",
+      "todoUpdated": "Tarea actualizada exitosamente",
+      "todoDeleted": "Tarea eliminada exitosamente",
+      "todosCleared": "{count} {count, plural, one {tarea} other {tareas}} eliminadas"
+    },
+    "a11y": {
+      "skipToMain": "Saltar al contenido principal",
+      "changeLanguage": "Cambiar idioma",
+      "todoList": "Lista de tareas",
+      "newTodo": "Campo para nueva tarea",
+      "loading": "Cargando",
+      "loadingTodos": "Cargando tareas",
+      "closeModal": "Cerrar diálogo",
+      "editTodo": "Editar '{text}'",
+      "deleteTodo": "Eliminar '{text}'",
+      "toggleTodo": "Marcar '{text}' como {completed, select, true {pendiente} other {completada}}"
+    },
+    "offline": {
+      "title": "Sin conexión",
+      "message": "Tus cambios se sincronizarán cuando vuelvas a estar en línea",
+      "banner": "Sin conexión. Los cambios se sincronizarán cuando vuelva la conexión."
+    },
+    "validation": {
+      "required": "Este campo es obligatorio",
+      "minLength": "Debe tener al menos {min} caracteres",
+      "maxLength": "Debe tener como máximo {max} caracteres",
+      "invalidDate": "Formato de fecha inválido",
+      "pastDate": "La fecha no puede estar en el pasado"
+    },
+    "common": {
+      "close": "Cerrar",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "add": "Agregar",
+      "loading": "Cargando...",
+      "error": "Error",
+      "success": "Éxito",
+      "retry": "Reintentar",
+      "back": "Volver"
+    }
+  }

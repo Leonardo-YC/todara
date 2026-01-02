@@ -1,19 +1,23 @@
 'use client';
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';
-import { getTodoCountText } from '@/utils/plurals';
 import type { TodoFooterProps } from '@/types';
 import styles from './TodoFooter.module.css';
 
 export const TodoFooter: React.FC<TodoFooterProps> = ({ activeCount, completedCount, onClearCompleted }) => {
+  const t = useTranslations('footer');
+
   if (activeCount === 0 && completedCount === 0) return null;
 
   return (
     <footer className={styles.footer}>
-      <span>{getTodoCountText(activeCount)}</span>
+      {/* next-intl maneja el plural automáticamente basado en 'count' */}
+      <span>{t('itemsLeft', { count: activeCount })}</span>
+      
       {completedCount > 0 && (
         <Button variant="ghost" size="sm" onClick={onClearCompleted}>
-          Limpiar completados ({completedCount})
+          {t('clearCompleted')}
         </Button>
       )}
     </footer>

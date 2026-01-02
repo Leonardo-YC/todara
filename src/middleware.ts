@@ -1,41 +1,50 @@
+import createMiddleware from 'next-intl/middleware';
 import NextAuth from 'next-auth';
 import { authConfig } from '@/lib/auth/auth.config';
 import { NextResponse } from 'next/server';
 
-// Inicializamos NextAuth solo con la config ligera para el Edge
+// 1. Configuración de i18n (Idiomas)
+const intlMiddleware = createMiddleware({
+  locales: ['en', 'es'],
+  defaultLocale: 'en',
+  localePrefix: 'as-needed',
+});
+
+// 2. Inicializamos NextAuth
 const { auth } = NextAuth(authConfig);
 
+// 3. Exportamos el middleware combinado
 export default auth((req) => {
-  const { pathname } = req.nextUrl;
+  const { nextUrl } = req;
   const isAuthenticated = !!req.auth;
 
-  // Rutas públicas
-  const publicRoutes = ['/', '/auth/signin', '/auth/verify', '/auth/error'];
+  // --- LÓGICA DE SEGURIDAD (Tu código anterior) ---
+
+  // Lista de rutas API públicas (no requieren auth)
   const publicApiRoutes = ['/api/auth', '/api/health'];
+  const isPublicApiRoute = publicApiRoutes.some((route) => 
+    nextUrl.pathname.startsWith(route)
+  );
 
-  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
-  const isPublicApiRoute = publicApiRoutes.some((route) => pathname.startsWith(route));
-
-  // Si es ruta pública, permitimos el paso
-  if (isPublicRoute || isPublicApiRoute) {
-    return NextResponse.next();
-  }
-
-  // Protección de rutas API
-  if (pathname.startsWith('/api/') && !isAuthenticated) {
+  // Protección de rutas API:
+  // Si es una ruta /api/, no es pública y no está autenticado -> Error 401
+  if (nextUrl.pathname.startsWith('/api/') && !isPublicApiRoute && !isAuthenticated) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Protección de rutas privadas (si no es pública y no está autenticado)
-  // Nota: NextAuth suele redirigir, pero esto fuerza la seguridad
-  /* if (!isAuthenticated && !isPublicRoute) {
-     return NextResponse.redirect(new URL('/auth/signin', req.url));
+  // Si es una ruta API pública o autenticada, dejamos pasar la API sin tocar i18n
+  if (nextUrl.pathname.startsWith('/api/')) {
+    return NextResponse.next();
   }
-  */
 
-  return NextResponse.next();
+  // --- LÓGICA DE I18N (Nuevo) ---
+  
+  // Si no es API, es una página (Frontend). 
+  // Dejamos que next-intl maneje la redirección (/es, /en) y los headers.
+  return intlMiddleware(req);
 });
 
+// 4. Configuración del Matcher (Para que aplique a todo menos archivos estáticos)
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };
