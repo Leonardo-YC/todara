@@ -1,0 +1,57 @@
+name: CI Testing
+
+# Se activa cuando haces push a main o ramas de funcionalidad
+on:
+  push:
+    branches: [ main, feat/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # Variables de entorno FALSAS para el entorno de CI.
+    # Como usamos Mocks en los tests, no necesitamos conectar a Neon ni Resend reales.
+    env:
+      DATABASE_URL: "postgresql://postgres:password@localhost:5432/todara_test" # Formato válido, pero falso
+      NEXTAUTH_SECRET: "super-secret-dummy-value-for-ci-testing"
+      NEXTAUTH_URL: "http://localhost:3000"
+      EMAIL_SERVER_HOST: "smtp.example.com"
+      EMAIL_SERVER_PORT: "587"
+      EMAIL_SERVER_USER: "user"
+      EMAIL_SERVER_PASSWORD: "password"
+      EMAIL_FROM: "test@example.com"
+      UPSTASH_REDIS_REST_URL: "https://example.upstash.io"
+      UPSTASH_REDIS_REST_TOKEN: "dummy-token"
+
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Instalar dependencias
+      run: npm ci
+      # npm ci es más estricto y rápido que npm install para CI
+
+    - name: Generar Cliente Prisma
+      run: npx prisma generate
+      # Prisma necesita leer la variable DATABASE_URL (aunque sea falsa) para generar el cliente
+
+    - name: Correr Tests Unitarios (Lógica)
+      run: npm run test:coverage
+
+    - name: Instalar Navegadores de Playwright
+      run: npx playwright install --with-deps
+
+    - name: Construir la aplicación
+      run: npm run build
+      # Esto verifica que no haya errores de compilación en Next.js
+
+    - name: Correr Tests E2E (Robot)
+      run: npm run test:e2e

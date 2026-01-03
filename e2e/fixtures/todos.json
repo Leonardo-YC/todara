@@ -1,0 +1,14 @@
+[
+    {
+      "id": "1",
+      "text": "Comprar leche",
+      "completed": false,
+      "dueDate": null
+    },
+    {
+      "id": "2",
+      "text": "Estudiar Testing",
+      "completed": true,
+      "dueDate": "2024-12-25T00:00:00.000Z"
+    }
+  ]
