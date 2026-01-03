@@ -1,9 +1,5 @@
-/**
- * MSW (Mock Service Worker) handlers for API testing
- */
 import { http, HttpResponse } from 'msw';
 
-// Definimos el tipo aquí para no depender de otros archivos en este mock
 type Todo = {
   id: string;
   text: string;
@@ -14,20 +10,20 @@ type Todo = {
   updatedAt: Date;
 };
 
-// Datos de prueba iniciales
+// Datos iniciales
 let mockTodos: Todo[] = [
   {
     id: 'todo_1',
     text: 'Comprar comida',
     completed: false,
-    dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+    dueDate: new Date(Date.now() + 86400000), // Mañana
     userId: 'user_1',
     createdAt: new Date(),
     updatedAt: new Date(),
   },
   {
     id: 'todo_2',
-    text: 'Terminar documentación',
+    text: 'Tarea completada',
     completed: true,
     dueDate: null,
     userId: 'user_1',
@@ -37,79 +33,73 @@ let mockTodos: Todo[] = [
 ];
 
 export const handlers = [
-  // GET /api/todos
+  // GET: Obtener todos
   http.get('http://localhost:3000/api/todos', ({ request }) => {
     const url = new URL(request.url);
-    const filter = url.searchParams.get('filter') || 'all';
+    const filter = url.searchParams.get('filter');
+    
+    let result = [...mockTodos];
+    if (filter === 'active') result = result.filter(t => !t.completed);
+    if (filter === 'completed') result = result.filter(t => t.completed);
 
-    let filteredTodos = [...mockTodos];
-
-    if (filter === 'active') {
-      filteredTodos = filteredTodos.filter((t) => !t.completed);
-    } else if (filter === 'completed') {
-      filteredTodos = filteredTodos.filter((t) => t.completed);
-    }
-
-    return HttpResponse.json({ todos: filteredTodos });
+    return HttpResponse.json({ todos: result });
   }),
 
-  // POST /api/todos
+  // POST: Crear todo
   http.post('http://localhost:3000/api/todos', async ({ request }) => {
     const body = await request.json() as any;
-    const { text, dueDate } = body;
-
     const newTodo: Todo = {
       id: `todo_${Date.now()}`,
-      text,
+      text: body.text,
       completed: false,
-      dueDate: dueDate ? new Date(dueDate) : null,
+      dueDate: body.dueDate ? new Date(body.dueDate) : null,
       userId: 'user_1',
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-
-    mockTodos.push(newTodo);
+    mockTodos.unshift(newTodo); // Agregar al principio
     return HttpResponse.json({ todo: newTodo }, { status: 201 });
   }),
 
-  // GET /api/todos/[id]
-  http.get('http://localhost:3000/api/todos/:id', ({ params }) => {
+  // 👇 ESTE ES EL QUE TE FALTABA
+  // PATCH: Actualizar (Completar/Editar)
+  http.patch('http://localhost:3000/api/todos/:id', async ({ params, request }) => {
     const { id } = params;
-    const todo = mockTodos.find((t) => t.id === id);
+    const updates = await request.json() as Partial<Todo>;
+    
+    const index = mockTodos.findIndex(t => t.id === id);
+    if (index === -1) return HttpResponse.json({ error: 'Not found' }, { status: 404 });
 
-    if (!todo) {
-      return HttpResponse.json({ error: 'Todo not found' }, { status: 404 });
-    }
-    return HttpResponse.json({ todo });
+    mockTodos[index] = { ...mockTodos[index], ...updates, updatedAt: new Date() };
+    return HttpResponse.json({ todo: mockTodos[index] });
   }),
 
-  // DELETE /api/todos/[id]
+  // DELETE: Eliminar
   http.delete('http://localhost:3000/api/todos/:id', ({ params }) => {
     const { id } = params;
-    const index = mockTodos.findIndex((t) => t.id === id);
-
-    if (index === -1) {
-      return HttpResponse.json({ error: 'Todo not found' }, { status: 404 });
-    }
-
+    const index = mockTodos.findIndex(t => t.id === id);
+    
+    if (index === -1) return HttpResponse.json({ error: 'Not found' }, { status: 404 });
+    
     mockTodos.splice(index, 1);
     return HttpResponse.json({ success: true, id });
   }),
-
-  // GET /api/health
-  http.get('http://localhost:3000/api/health', () => {
-    return HttpResponse.json({ status: 'ok', db: 'connected' });
-  }),
+  
+  // Limpiar completados
+  http.post('http://localhost:3000/api/todos/clear-completed', () => {
+    const count = mockTodos.filter(t => t.completed).length;
+    mockTodos = mockTodos.filter(t => !t.completed);
+    return HttpResponse.json({ deleted: count });
+  })
 ];
 
-// Función para reiniciar los datos entre tests
 export function resetMockTodos() {
   mockTodos = [
     {
       id: 'todo_1',
       text: 'Comprar comida',
       completed: false,
-      dueDate: new Date(),
+      dueDate: new Date(Date.now() + 86400000),
       userId: 'user_1',
       createdAt: new Date(),
       updatedAt: new Date(),
