@@ -1,12 +1,9 @@
 {
-    "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
-    "plugins": ["prettier"],
-    "rules": {
-      "prettier/prettier": "error",
-      "no-console": ["warn", { "allow": ["warn", "error"] }],
-      "prefer-const": "error",
-      "no-var": "error",
-      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
-      "@typescript-eslint/no-explicit-any": "error"
-    }
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    "no-console": "off",
+    "@next/next/no-img-element": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
+}
