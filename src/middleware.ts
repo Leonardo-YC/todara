@@ -18,49 +18,53 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isAuthenticated = !!req.auth;
 
-  // ✅ EXCLUIR ARCHIVOS ESTÁTICOS DE I18N (NUEVA LÓGICA)
+  // ✅ EXCLUIR ARCHIVOS ESTÁTICOS
   const staticPaths = [
-    '/icons/',
-    '/images/',
-    '/fonts/',
-    '/sw.js',
-    '/workbox-',
-    '/manifest.json',
-    '/robots.txt',
-    '/sitemap.xml',
+    '/icons/', '/images/', '/fonts/', '/sw.js', '/workbox-', 
+    '/manifest.json', '/robots.txt', '/sitemap.xml',
   ];
 
   const isStaticFile = staticPaths.some(path => nextUrl.pathname.startsWith(path)) ||
                        nextUrl.pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|eot)$/);
 
-  // Si es un archivo estático, déjalo pasar sin i18n ni auth
-  if (isStaticFile) {
-    return NextResponse.next();
-  }
+  if (isStaticFile) return NextResponse.next();
 
-  // --- LÓGICA DE SEGURIDAD (Tu código anterior) ---
+  // --- LÓGICA DE AUTH API ---
   const publicApiRoutes = ['/api/auth', '/api/health'];
-  const isPublicApiRoute = publicApiRoutes.some((route) => 
-    nextUrl.pathname.startsWith(route)
-  );
+  const isPublicApiRoute = publicApiRoutes.some((route) => nextUrl.pathname.startsWith(route));
 
   // Protección de rutas API
   if (nextUrl.pathname.startsWith('/api/') && !isPublicApiRoute && !isAuthenticated) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Si es una ruta API, dejamos pasar sin i18n
+  // Si es ruta API, pasamos sin i18n
   if (nextUrl.pathname.startsWith('/api/')) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    addSecurityHeaders(response); // Agregamos seguridad también a la API
+    return response;
   }
 
-  // --- LÓGICA DE I18N ---
-  return intlMiddleware(req);
+  // --- LÓGICA DE I18N + SEGURIDAD ---
+  // Generamos la respuesta de i18n primero
+  const response = intlMiddleware(req);
+
+  // 🛡️ INYECCIÓN DE CABECERAS DE SEGURIDAD (FASE 12)
+  addSecurityHeaders(response);
+
+  return response;
 });
 
-// 4. Configuración del Matcher (Optimizado)
+// Función auxiliar para no repetir código
+function addSecurityHeaders(response: NextResponse) {
+  response.headers.set('X-Frame-Options', 'SAMEORIGIN'); // Anti-Clickjacking
+  response.headers.set('X-Content-Type-Options', 'nosniff'); // Anti-MIME sniffing
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains'); // HTTPS forzado
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin'); // Privacidad
+}
+
+// 4. Configuración del Matcher
 export const config = {
-  // ✅ Excluye archivos estáticos del middleware completamente
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|icons/|images/|.*\\..*).*)',
   ],
