@@ -16,6 +16,9 @@ import styles from '@/app/[locale]/page.module.css';
 
 const ITEMS_PER_PAGE = 20;
 
+// ✅ Definimos el tipo de prioridad aquí para que coincida con el formulario
+type Priority = 'low' | 'normal' | 'high';
+
 export function TodoAppView() {
   const { todos, addTodo, toggleTodo, deleteTodo, updateTodo, clearCompleted, isLoading } = useTodos();
   const searchParams = useSearchParams();
@@ -35,6 +38,7 @@ export function TodoAppView() {
     setCurrentPage(1);
   }, [view]);
 
+  // 🧠 LÓGICA DE FILTROS
   const filteredTodos = useMemo(() => {
     if (view === 'inbox') return todos.filter(t => !t.dueDate && !t.completed);
     
@@ -64,6 +68,7 @@ export function TodoAppView() {
     return [];
   }, [todos, view]);
 
+  // ORDENAMIENTO
   const sortedTodos = useMemo(() => {
     const priorityMap: Record<string, number> = { high: 3, normal: 2, low: 1 };
     
@@ -79,6 +84,7 @@ export function TodoAppView() {
     });
   }, [filteredTodos]);
 
+  // 📄 LÓGICA DE PAGINACIÓN
   const totalPages = Math.ceil(sortedTodos.length / ITEMS_PER_PAGE);
   const paginatedTodos = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -98,10 +104,20 @@ export function TodoAppView() {
 
   const handleClearClick = () => { setIsClearModalOpen(true); };
 
-  // ✅ CAMBIO CLAVE AQUÍ: Quitamos async/await para que cierre al instante
+  // ✅ Cierre instantáneo del modal (sin await)
   const confirmClear = () => { 
-      setIsClearModalOpen(false); // 1. Cierra la ventana visualmente YA
-      clearCompleted();           // 2. Manda la orden al servidor en segundo plano
+      setIsClearModalOpen(false); 
+      clearCompleted();           
+  };
+
+  // ✅ SOLUCIÓN AL ERROR DE TYPESCRIPT
+  // Esta función intermedia asegura que los tipos coincidan exactamente
+  const handleAddTodo = (data: { text: string; priority: Priority; dueDate: Date | null }) => {
+    addTodo({
+      text: data.text,
+      priority: data.priority,
+      dueDate: data.dueDate
+    });
   };
 
   const showForm = view !== 'completed' && view !== 'overdue';
@@ -150,7 +166,7 @@ export function TodoAppView() {
       <div className={styles.contentStack} style={{ gap: showForm ? '2rem' : '1rem' }}>
         {showForm && (
           <TodoForm 
-            onSubmit={addTodo} 
+            onSubmit={handleAddTodo} // ✅ Usamos el wrapper corregido aquí
             isLoading={isLoading} 
             defaultDate={formDefaultDate}
             hideControls={view === 'inbox'}
