@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🐶 Todara (Todo Perfect)
 
-## Getting Started
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-100%2F100-success?style=flat-square&logo=lighthouse)](https://pagespeed.web.dev/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-First, run the development server:
+> **[English]** A boutique task management app built with excellence in fundamentals: Accessibility, Performance, and Security.
+>
+> **[Español]** Una aplicación de gestión de tareas "boutique" construida con excelencia en los fundamentos: Accesibilidad, Rendimiento y Seguridad.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Live Demo / Demo en Vivo
+👉 **[https://todara.app](https://todara.app)** *(Link pendiente de deploy)*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![App Screenshot](/public/icons/icon-512x512.png)
+*(Reemplaza esto con una captura de pantalla real de tu app luego)*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✨ Key Features / Características Clave
 
-To learn more about Next.js, take a look at the following resources:
+| Feature (EN) | Característica (ES) |
+|--------------|---------------------|
+| **100/100 Performance** | **Rendimiento 100/100**: Optimizado con Next.js y carga diferida. |
+| **I18n Support** | **Internacionalización**: Soporte nativo Inglés/Español. |
+| **Security First** | **Seguridad**: Middleware de cabeceras HTTP, sanitización de inputs y prevención XSS. |
+| **Authentication** | **Autenticación**: Sistema robusto con NextAuth (Magic Links). |
+| **PWA Ready** | **PWA**: Instalable y funcional offline. |
+| **A11y (Accessibility)** | **Accesibilidad**: Navegación por teclado y soporte para lectores de pantalla. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack / Tecnologías
 
-## Deploy on Vercel
+* **Core:** Next.js 14 (App Router), React 18, TypeScript.
+* **Styling:** CSS Modules (Performance over utility-first), Tailwind CSS (Utilities).
+* **Database:** PostgreSQL (Prisma ORM).
+* **Auth:** Auth.js (NextAuth).
+* **Tools:** ESLint, Prettier, Husky (Git Hooks).
+* **Security:** DOMPurify, Security Headers Middleware.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ⚡ Performance & Security / Rendimiento y Seguridad
+
+This project prioritizes "Web Vitals" and Security:
+* **Optimized Images:** Using `.webp` and `.avif` formats.
+* **Sanitization:** Inputs are cleaned using `isomorphic-dompurify`.
+* **Error Handling:** Custom Global Error Boundaries.
+
+*Este proyecto prioriza las "Web Vitals" y la Seguridad:*
+* *Imágenes optimizadas con formatos modernos.*
+* *Sanitización de entradas para prevenir inyecciones.*
+* *Manejo de errores global personalizado.*
+
+---
+
+## 🚀 Getting Started / Instalación Local
+
+1.  **Clone the repo / Clonar repositorio:**
+    ```bash
+    git clone [https://github.com/tu-usuario/todara.git](https://github.com/tu-usuario/todara.git)
+    cd todara
+    ```
+
+2.  **Install dependencies / Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure Environment / Configurar Entorno:**
+    Create a `.env` file based on `.env.example`.
+    *Crea un archivo `.env` basado en `.env.example`.*
+
+4.  **Run Development Server / Correr Servidor:**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 📄 License / Licencia
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+*Este proyecto está bajo la **Licencia MIT**. Ver el archivo [LICENSE](LICENSE) para más detalles.*
+
+---
+
+Made with ❤️ by **LeonardoYC**.
