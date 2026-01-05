@@ -2,6 +2,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Inter } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next'; // ✅ Performance
+import { Analytics } from '@vercel/analytics/react';         // ✅ Analytics
 import { APP_NAME, APP_DESCRIPTION } from '@/lib/constants';
 import { TodoProvider, AuthProvider, ThemeProvider } from '@/components/providers'; 
 import { Header } from '@/components/layout/Header/Header';
@@ -14,7 +16,14 @@ import { auth } from '@/lib/auth/auth';
 import styles from './layout.module.css';
 import '../globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+// ✅ Optimización de fuente
+const inter = Inter({ 
+  subsets: ['latin'], 
+  variable: '--font-inter',
+  display: 'swap', // Importante para evitar "flash" de texto invisible
+  adjustFontFallback: true,
+});
+
 const locales = ['en', 'es'];
 
 export const metadata = {
@@ -61,9 +70,7 @@ export default async function LocaleLayout({
                 {/* 3. MobileNav solo con sesión */}
                 {session && <MobileNav />}
                 
-                {/* ✅ 4. FOOTER CON ESPACIO EXTRA EN MÓVIL
-                    Si hay sesión, aplicamos la clase que añade padding-bottom.
-                    Si no hay sesión (login), se ve normal. */}
+                {/* 4. Footer */}
                 <div className={session ? styles.footerContainer : ''}>
                   <SiteFooter /> 
                 </div>
@@ -72,6 +79,10 @@ export default async function LocaleLayout({
             </ThemeProvider>
           </AuthProvider>
         </NextIntlClientProvider>
+
+        {/* ✅ Métricas de Performance (Solo funcionan en Vercel o con build local) */}
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
