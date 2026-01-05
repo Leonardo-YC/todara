@@ -5,10 +5,18 @@ import { Checkbox } from '@/components/ui/Checkbox';
 import { Flag, Edit2, Trash2 } from 'lucide-react';
 import { formatFriendlyDate, isOverdue } from '@/lib/date-utils';
 import { cn } from '@/lib/utils';
-import type { TodoItemProps } from '@/types';
+import type { Todo } from '@/types'; // ✅ Importamos solo el tipo base Todo
 import styles from './TodoItem.module.css';
 
-export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onEdit, onDelete }) => {
+// ✅ Definimos y EXPORTAMOS la interfaz aquí mismo
+export interface TodoItemProps {
+  todo: Todo;
+  onToggle: (id: string) => void;
+  onEdit: (todo: Todo) => void;
+  onDelete: (id: string) => void;
+}
+
+export const TodoItem = ({ todo, onToggle, onEdit, onDelete }: TodoItemProps) => {
   
   const priorityColors: Record<string, string> = {
     high: '#ef4444',   // Rojo
@@ -34,8 +42,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onEdit, onDe
         <div className={styles.header}>
           <p className={styles.text}>{todo.text}</p>
           
-          {/* ✅ CORRECCIÓN PRO: Solo mostramos la bandera si NO es normal.
-              Así el Inbox se ve limpio, y solo resaltan las tareas Altas o Bajas. */}
+          {/* Solo mostramos la bandera si NO es normal */}
           {todo.priority && todo.priority !== 'normal' && (
              <Flag 
                size={16} 

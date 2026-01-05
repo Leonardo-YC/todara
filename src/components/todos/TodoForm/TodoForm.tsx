@@ -1,18 +1,30 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl'; // ✅ Importar
+import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Flag, Calendar } from 'lucide-react';
 import { formatLocalYYYYMMDD } from '@/lib/date-utils';
 import styles from './TodoForm.module.css';
 
-export const TodoForm = ({ onSubmit, isLoading, defaultDate, hideControls = false }: any) => {
-  const t = useTranslations('todo'); // ✅ Traducciones de Todo
-  const tPrio = useTranslations('priorities'); // ✅ Traducciones de Prioridades
+// ✅ Definimos el tipo exacto para la prioridad
+type Priority = 'low' | 'normal' | 'high';
+
+export interface TodoFormProps {
+  // ✅ Corregido: priority ahora es Priority, no string
+  onSubmit: (data: { text: string; priority: Priority; dueDate: Date | null }) => void;
+  isLoading: boolean;
+  defaultDate?: Date | null;
+  hideControls?: boolean;
+}
+
+export const TodoForm = ({ onSubmit, isLoading, defaultDate, hideControls = false }: TodoFormProps) => {
+  const t = useTranslations('todo');
+  const tPrio = useTranslations('priorities');
 
   const [text, setText] = useState('');
-  const [priority, setPriority] = useState('normal'); 
+  // ✅ Corregido: El estado ahora sabe que solo puede ser Priority
+  const [priority, setPriority] = useState<Priority>('normal'); 
   const [dueDate, setDueDate] = useState('');
 
   useEffect(() => {
@@ -27,7 +39,8 @@ export const TodoForm = ({ onSubmit, isLoading, defaultDate, hideControls = fals
     e.preventDefault();
     if (!text.trim()) return;
     
-    const finalPriority = hideControls ? 'normal' : priority;
+    // ✅ Aseguramos que finalPriority sea del tipo correcto
+    const finalPriority: Priority = hideControls ? 'normal' : priority;
     const finalDate = (hideControls || !dueDate) ? null : new Date(`${dueDate}T12:00:00`);
 
     onSubmit({
@@ -45,7 +58,7 @@ export const TodoForm = ({ onSubmit, isLoading, defaultDate, hideControls = fals
         <Input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={t('addPlaceholder')} // "Qué necesitas hacer?" / "What needs to be done?"
+          placeholder={t('addPlaceholder')}
           disabled={isLoading}
           autoFocus
         />
@@ -75,7 +88,8 @@ export const TodoForm = ({ onSubmit, isLoading, defaultDate, hideControls = fals
               <button
                 key={p.value}
                 type="button"
-                onClick={() => setPriority(p.value)}
+                // ✅ Forzamos el tipo al hacer click
+                onClick={() => setPriority(p.value as Priority)}
                 className={`${styles.flagBtn} ${priority === p.value ? styles.activeFlag : ''}`}
                 title={p.label}
                 style={{ color: p.color }}
