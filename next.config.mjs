@@ -1,19 +1,17 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 import withPWAInit from 'next-pwa';
 
-// 1. Configuración de i18n
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
-// 2. Configuración de PWA
 const withPWA = withPWAInit({
   dest: 'public',
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development', // Desactivar en desarrollo
+  disable: process.env.NODE_ENV === 'development', 
   buildExcludes: [/middleware-manifest\.json$/],
+  publicExcludes: ['!icons/**/*'],
   runtimeCaching: [
     {
-      // Cachear Google Fonts
       urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
       handler: 'CacheFirst',
       options: {
@@ -22,7 +20,6 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Cachear Archivos Estáticos (JS, CSS, Imágenes)
       urlPattern: /\.(?:eot|otf|ttc|ttf|woff|woff2|font.css|jpg|jpeg|gif|png|svg|ico|webp|js|css)$/i,
       handler: 'StaleWhileRevalidate',
       options: {
@@ -31,13 +28,12 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Cachear API (NetworkFirst: Intenta internet, si falla usa caché)
       urlPattern: /\/api\/todos.*/i,
       handler: 'NetworkFirst',
       method: 'GET',
       options: {
         cacheName: 'api-cache',
-        expiration: { maxEntries: 16, maxAgeSeconds: 5 * 60 }, // 5 minutos
+        expiration: { maxEntries: 16, maxAgeSeconds: 5 * 60 },
         networkTimeoutSeconds: 10,
       },
     },
@@ -48,12 +44,26 @@ const withPWA = withPWAInit({
 const nextConfig = {
   reactStrictMode: true,
   
-  // Optimización de imágenes
   images: {
     formats: ['image/avif', 'image/webp'],
+    // ✅ AQUÍ ESTÁ EL CAMBIO: Agregamos los dominios permitidos
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // Fotos de perfil de Google
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com', // Fotos de GitHub (por si acaso)
+      },
+      {
+        protocol: 'https',
+        hostname: 'graph.microsoft.com', // Fotos de Microsoft (a veces necesarias)
+      }
+    ],
+    unoptimized: false,
   },
 
-  // Headers de seguridad (TUS HEADERS ORIGINALES)
   async headers() {
     return [
       {
@@ -71,5 +81,4 @@ const nextConfig = {
   },
 };
 
-// 3. Exportación combinada: PWA -> i18n -> Config
 export default withPWA(withNextIntl(nextConfig));
