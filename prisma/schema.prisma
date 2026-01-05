@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// This is your Prisma schema file
 
 generator client {
   provider = "prisma-client-js"
@@ -10,7 +9,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User model for authentication
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -20,7 +18,6 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  // Relations
   todos    Todo[]
   accounts Account[]
   sessions Session[]
@@ -28,27 +25,29 @@ model User {
   @@map("users")
 }
 
-// Todo model
 model Todo {
   id        String   @id @default(cuid())
   text      String
   completed Boolean  @default(false)
-  dueDate   DateTime?
+  
+  // ✅ CAMBIO: Opcional para Inbox
+  dueDate   DateTime? 
+  
+  // ✅ CAMBIO: Prioridad (low, normal, high)
+  priority  String   @default("normal") 
+  
   userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // Indexes for performance
   @@index([userId])
   @@index([completed])
-  @@index([userId, completed])
   @@map("todos")
 }
 
-// NextAuth models
+// NextAuth models (Sin cambios)
 model Account {
   id                String  @id @default(cuid())
   userId            String
