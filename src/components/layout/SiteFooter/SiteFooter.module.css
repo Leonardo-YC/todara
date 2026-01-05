@@ -1,0 +1,60 @@
+.footer {
+  width: 100%;
+  padding: 2rem 1rem;
+  
+  /* ✅ FONDO: Usamos la variable secundaria para que resalte sutilmente */
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  
+  text-align: center;
+  margin-top: auto;
+  
+  /* Transiciones suaves */
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.3s ease;
+}
+
+.textRow {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; 
+  gap: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.separator {
+  color: #000000; 
+  font-weight: 900;
+  transition: color 0.3s ease;
+  margin: 0 0.2rem;
+}
+
+/* Punto blanco en Dark Mode */
+:global(.dark) .separator {
+  color: #ffffff; 
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--color-primary-600);
+  transition: color 0.3s ease;
+}
+
+.devLink {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.devLink:hover {
+  color: var(--color-primary-600);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}

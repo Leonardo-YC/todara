@@ -1,54 +1,75 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { Todo, TodoContextType, TodoFilter, TodoFormData } from '@/types';
 import { useOnline } from '@/hooks/useOnline';
+import { useTranslations } from 'next-intl'; // ✅ 1. Importar
 
-const TodoContext = createContext<TodoContextType | undefined>(undefined);
+interface ExtendedTodoContextType extends TodoContextType {
+  selectedDate: string;
+  setSelectedDate: (date: string) => void;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  totalPages: number;
+}
+
+const TodoContext = createContext<ExtendedTodoContextType | undefined>(undefined);
 
 export function TodoProvider({ children }: { children: React.ReactNode }) {
+  const t = useTranslations('errors'); // ✅ 2. Cargar traducciones de errores
+  
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<TodoFilter>('all');
+  
+  const [selectedDate, setSelectedDate] = useState<string>(() => {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  });
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(20);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  // Hook personalizado para saber si hay internet
   const isOnline = useOnline();
 
-  // Cargar todos al inicio
+  // 1. Detectar tamaño pantalla
   useEffect(() => {
-    const fetchTodos = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch('/api/todos');
-        if (res.ok) {
-          const data = await res.json();
-          setTodos(data.todos);
-        }
-      } catch (err) {
-        console.error('Error cargando todos:', err);
-      } finally {
-        setIsLoading(false);
-      }
+    const handleResize = () => {
+      setLimit(window.innerWidth < 768 ? 10 : 20);
     };
-
-    fetchTodos();
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Sincronización básica cuando vuelve internet
-  useEffect(() => {
-    if (isOnline) {
-      fetch('/api/todos')
-        .then(res => res.ok ? res.json() : null)
-        .then(data => {
-          if (data?.todos) setTodos(data.todos);
-        })
-        .catch(console.error);
+  // 2. Fetcher
+  const fetchTodos = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch('/api/todos'); 
+      if (res.ok) {
+        const data = await res.json();
+        setTodos(data.todos);
+      }
+    } catch (err) {
+      console.error(err);
+      setError(t('loadFailed')); // ✅ Usar traducción
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
+    fetchTodos();
   }, [isOnline]);
 
   const addTodo = async (data: TodoFormData) => {
-    // 1. Optimistic Update
     const tempId = `temp-${Date.now()}`;
     const optimisticTodo: Todo = {
       id: tempId,
@@ -58,7 +79,8 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
       createdAt: new Date(),
       updatedAt: new Date(),
       dueDate: data.dueDate || null,
-    };
+      priority: data.priority || 'normal',
+    } as Todo;
 
     setTodos((prev) => [optimisticTodo, ...prev]);
 
@@ -70,40 +92,36 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (!res.ok) throw new Error('Error al guardar');
-
-      const newTodo = await res.json();
-      setTodos((prev) => prev.map((t) => (t.id === tempId ? newTodo : t)));
+      
+      await fetchTodos();
 
     } catch (err) {
-      if (!navigator.onLine) {
-        console.log('Guardado localmente (Offline)');
-      } else {
-        setTodos((prev) => prev.filter((t) => t.id !== tempId));
-        setError('Error al crear tarea');
-        throw err;
-      }
+      setTodos((prev) => prev.filter((t) => t.id !== tempId));
+      setError(t('createFailed')); // ✅ Usar traducción
+    }
+  };
+
+  const updateTodo = async (id: string, updates: Partial<Todo>) => {
+    const oldTodo = todos.find(t => t.id === id);
+    if (!oldTodo) return;
+
+    setTodos(prev => prev.map(t => t.id === id ? { ...t, ...updates } : t));
+    
+    try {
+        await fetch(`/api/todos/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updates)
+        });
+    } catch (error) {
+        setTodos(prev => prev.map(t => t.id === id ? oldTodo : t));
+        setError(t('updateFailed')); // ✅ Usar traducción
     }
   };
 
   const toggleTodo = async (id: string) => {
-    const todo = todos.find((t) => t.id === id);
-    if (!todo) return;
-
-    const updatedTodo = { ...todo, completed: !todo.completed };
-    setTodos((prev) => prev.map((t) => (t.id === id ? updatedTodo : t)));
-
-    try {
-      await fetch(`/api/todos/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ completed: updatedTodo.completed }),
-      });
-    } catch (err) {
-      if (navigator.onLine) {
-        setTodos((prev) => prev.map((t) => (t.id === id ? todo : t)));
-        setError('Error al actualizar');
-      }
-    }
+     const t = todos.find(x => x.id === id);
+     if(t) await updateTodo(id, { completed: !t.completed });
   };
 
   const deleteTodo = async (id: string) => {
@@ -112,44 +130,22 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
 
     try {
       await fetch(`/api/todos/${id}`, { method: 'DELETE' });
+      await fetchTodos();
     } catch (err) {
-      if (navigator.onLine) {
-        setTodos(prevTodos);
-        setError('Error al eliminar');
-      }
+      setTodos(prevTodos);
+      setError(t('deleteFailed')); // ✅ Usar traducción
     }
   };
 
   const clearCompleted = async () => {
     const prevTodos = [...todos];
     setTodos((prev) => prev.filter((t) => !t.completed));
-
     try {
       await fetch('/api/todos/clear-completed', { method: 'POST' });
+      await fetchTodos();
     } catch (err) {
-      if (navigator.onLine) {
-        setTodos(prevTodos);
-      }
-    }
-  };
-
-  const updateTodo = async (id: string, updates: Partial<Todo>) => {
-    setTodos(prev => prev.map(t => t.id === id ? { ...t, ...updates } : t));
-    try {
-        await fetch(`/api/todos/${id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updates)
-        });
-    } catch (error) {
-        // Revertir recargando si hay error real de conexión y estamos online
-        if(navigator.onLine) {
-            const res = await fetch('/api/todos');
-            if (res.ok) {
-                const data = await res.json();
-                setTodos(data.todos);
-            }
-        }
+      setTodos(prevTodos);
+      // No seteamos error aquí para no molestar si falla silenciosamente
     }
   };
 
@@ -161,7 +157,12 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
         setFilter,
         isLoading,
         error,
-        isOnline, // <--- ¡AQUÍ ESTÁ LA CORRECCIÓN! ✅
+        isOnline,
+        selectedDate,
+        setSelectedDate,
+        page,
+        setPage,
+        totalPages,
         addTodo,
         toggleTodo,
         deleteTodo,
@@ -176,8 +177,6 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
 
 export function useTodos() {
   const context = useContext(TodoContext);
-  if (context === undefined) {
-    throw new Error('useTodos must be used within a TodoProvider');
-  }
-  return context;
+  if (context === undefined) throw new Error('useTodos error');
+  return context as ExtendedTodoContextType;
 }

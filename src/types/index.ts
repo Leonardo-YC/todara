@@ -4,6 +4,8 @@ export interface Todo {
   text: string;
   completed: boolean;
   dueDate: Date | string | null;
+  // ✅ AGREGADO: Prioridad (opcional porque tareas viejas quizás no tengan)
+  priority?: 'low' | 'normal' | 'high'; 
   userId?: string;
   createdAt: Date | string;
   updatedAt?: Date | string;
@@ -15,6 +17,8 @@ export type Locale = 'en' | 'es';
 export interface TodoFormData {
   text: string;
   dueDate: Date | null;
+  // ✅ AGREGADO: Prioridad en el formulario
+  priority?: 'low' | 'normal' | 'high';
 }
 
 // --- Props de Componentes ---
@@ -22,12 +26,15 @@ export interface TodoFormData {
 export interface TodoFormProps {
   onSubmit: (data: TodoFormData) => Promise<void>;
   isLoading?: boolean;
+  // ✅ AGREGADO: Para pre-llenar fecha en vista "Hoy"
+  defaultDate?: Date | null; 
 }
 
 export interface TodoItemProps {
   todo: Todo;
   onToggle: (id: string) => void;
-  onEdit: (id: string, text: string) => void;
+  // ✅ CAMBIO CRÍTICO: Ahora recibe el objeto Todo entero para el modal
+  onEdit: (todo: Todo) => void; 
   onDelete: (id: string) => void;
   locale?: Locale;
 }
@@ -36,12 +43,12 @@ export interface TodoListProps {
   todos: Todo[];
   filter: TodoFilter;
   onToggle: (id: string) => void;
-  onEdit: (id: string, text: string) => void;
+  // ✅ CAMBIO CRÍTICO: Igual aquí
+  onEdit: (todo: Todo) => void;
   onDelete: (id: string) => void;
   isLoading?: boolean;
 }
 
-// CORRECCIÓN AQUÍ: Agregamos 'counts'
 export interface TodoFiltersProps {
   currentFilter: TodoFilter;
   onChange: (filter: TodoFilter) => void;
@@ -58,7 +65,7 @@ export interface TodoFooterProps {
   onClearCompleted: () => void;
 }
 
-// --- Context Type (Fase 6) ---
+// --- Context Type ---
 
 export interface TodoContextType {
   todos: Todo[];
@@ -69,7 +76,8 @@ export interface TodoContextType {
   addTodo: (data: TodoFormData) => Promise<void>;
   updateTodo: (id: string, updates: Partial<Todo>) => Promise<void>;
   deleteTodo: (id: string) => Promise<void>;
-  toggleTodo: (id: string) => Promise<void>;
+  // ✅ CAMBIO: Debe devolver Promise<void> para que no chille TS
+  toggleTodo: (id: string) => Promise<void>; 
   setFilter: (filter: TodoFilter) => void;
   clearCompleted: () => Promise<void>;
 }

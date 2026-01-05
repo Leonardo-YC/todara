@@ -1,20 +1,26 @@
 .link {
-    position: fixed;
-    top: -100px; /* Oculto arriba */
-    left: 1rem;
-    z-index: 9999;
-    border-radius: 0.5rem;
-    background-color: var(--color-primary-600);
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    color: white;
-    text-decoration: none;
-    transition: top 0.3s ease;
-  }
+  position: fixed;
+  top: -100px; /* Oculto arriba */
+  left: 1rem;
+  z-index: 9999;
+  border-radius: 0.5rem;
   
-  /* Aparece cuando recibe foco (Tab) */
-  .link:focus {
-    top: 1rem;
-    outline: 3px solid white;
-    outline-offset: 2px;
-  }
+  /* Colores accesibles */
+  background-color: var(--color-primary-600);
+  color: #ffffff;
+  
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.3s ease;
+  
+  /* Sombra fuerte para resaltar sobre el contenido */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+/* Aparece cuando recibe foco (Tab) */
+.link:focus {
+  top: 1rem;
+  outline: 3px solid var(--color-primary-600);
+  outline-offset: 2px;
+}

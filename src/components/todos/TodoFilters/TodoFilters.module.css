@@ -1,28 +1,48 @@
 .nav {
-    display: flex;
-    gap: 0.25rem;
-    padding: 0.25rem;
-    background-color: #f3f4f6;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-  }
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  /* Fondo adaptable: Gris claro en día, gris oscuro en noche */
+  background-color: var(--color-bg-secondary);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-border);
+}
+
+.tab {
+  flex: 1;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  background: transparent;
   
-  .tab {
-    flex: 1;
-    padding: 0.5rem;
-    text-align: center;
-    border-radius: 0.25rem;
-    border: none;
-    cursor: pointer;
-    background: transparent;
-    color: #4b5563;
-    transition: all 0.2s;
-    font-weight: 500;
-    font-size: 0.875rem;
-  }
+  /* Texto adaptable */
+  color: var(--color-text-secondary);
   
-  .active {
-    background-color: #fff;
-    color: #000;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  }
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.tab:hover {
+  color: var(--color-text-primary);
+  background-color: rgba(0,0,0,0.05);
+}
+
+/* Estado Activo */
+.active {
+  /* Fondo blanco en día, gris medio en noche */
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  
+  /* Sombra sutil para levantar el botón */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  font-weight: 600;
+}
+
+/* Ajuste específico para Dark Mode si es necesario */
+:global(.dark) .tab:hover {
+  background-color: rgba(255,255,255,0.05);
+}

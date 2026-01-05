@@ -1,18 +1,27 @@
 .list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Espacio cómodo entre tareas */
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 1rem;
   
-  .emptyState {
-    text-align: center;
-    padding: 3rem 0;
-    color: #6b7280;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
+  /* Texto gris adaptable */
+  color: var(--color-text-secondary);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.125rem;
+  
+  /* Borde punteado opcional para indicar zona vacía */
+  border: 2px dashed var(--color-border);
+  border-radius: 1rem;
+  background-color: rgba(0,0,0,0.02);
+}

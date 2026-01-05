@@ -1,0 +1,58 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+  
+  .dateInput {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+  }
+  
+  .priorityGroup {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .flagBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .activeFlag {
+    background: var(--color-bg-secondary);
+    border-color: currentColor;
+    font-weight: bold;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }

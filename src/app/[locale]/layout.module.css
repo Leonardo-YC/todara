@@ -1,16 +1,37 @@
 .body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-    background-color: var(--color-bg-primary);
-    color: var(--color-text-primary);
-    /* Asegura que la fuente Inter se aplique correctamente */
-    font-family: var(--font-inter), system-ui, sans-serif;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.layoutWrapper {
+  display: flex;
+  flex: 1; 
+  width: 100%;
+  max-width: 1400px; 
+  margin: 0 auto;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor del Footer */
+.footerContainer {
+  width: 100%;
+}
+
+/* ✅ AJUSTE FINAL PARA MÓVIL */
+@media (max-width: 768px) {
+  .footerContainer {
+    /* Antes era 80px, ahora lo igualamos a la altura de la barra (65px) */
+    /* Usamos calc() para sumar la zona segura en iPhones si es necesario */
+    padding-bottom: calc(65px + env(safe-area-inset-bottom));
   }
-  
-  .main {
-    flex: 1; /* Esto hace que el contenido ocupe todo el espacio disponible */
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+}

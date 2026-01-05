@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './Modal.module.css';
-import { Button } from '../Button/Button'; // Reusamos el botón puro que ya hiciste
+import { Button } from '../Button/Button';
+import { useTranslations } from 'next-intl';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -14,21 +15,42 @@ export interface ModalProps {
 }
 
 export const Modal: React.FC<ModalProps> = ({
-  isOpen, onClose, title, children, confirmText = 'Confirmar', cancelText = 'Cancelar', onConfirm, variant = 'default'
+  isOpen, onClose, title, children, confirmText, cancelText, onConfirm, variant = 'default'
 }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations('common');
 
-  // Focus trap simple para cumplir accesibilidad
+  const finalConfirmText = confirmText || t('confirm');
+  const finalCancelText = cancelText || t('cancel');
+
   useEffect(() => {
     if (!isOpen) return;
+
+    // 1. Calculamos cuánto mide la barra de scroll antes de quitarla
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
+    // 2. Guardamos el estilo original para restaurarlo luego
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+
+    // 3. Bloqueamos el scroll y AÑADIMOS PADDING para compensar la desaparición de la barra
+    document.body.style.overflow = 'hidden';
+    
+    // Solo añadimos el padding si realmente había una barra de scroll
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', handleEscape);
-    document.body.style.overflow = 'hidden'; // Bloquear scroll
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      
+      // 4. Restauramos todo como estaba al cerrar
+      document.body.style.overflow = originalStyle;
+      document.body.style.paddingRight = originalPaddingRight;
     };
   }, [isOpen, onClose]);
 
@@ -38,20 +60,19 @@ export const Modal: React.FC<ModalProps> = ({
     <div className={styles.overlay}>
       <div className={styles.backdrop} onClick={onClose} />
       <div className={styles.modal} role="dialog" aria-modal="true">
+        
+        {/* Header limpio */}
         <div className={styles.header}>
           <h2 className={styles.title}>{title}</h2>
-          <button onClick={onClose} className={styles.closeButton} aria-label="Cerrar">
-            ✕
-          </button>
         </div>
         
         <div className={styles.content}>{children}</div>
         
         <div className={styles.footer}>
-          <Button variant="ghost" onClick={onClose}>{cancelText}</Button>
+          <Button variant="ghost" onClick={onClose}>{finalCancelText}</Button>
           {onConfirm && (
             <Button variant={variant === 'danger' ? 'danger' : 'primary'} onClick={onConfirm}>
-              {confirmText}
+              {finalConfirmText}
             </Button>
           )}
         </div>

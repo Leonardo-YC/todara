@@ -1,94 +1,91 @@
 'use client';
-import React, { useState } from 'react';
-import { useTranslations } from 'next-intl'; // Importamos el hook
+import React, { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl'; // ✅ Importar
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { MAX_TODO_LENGTH } from '@/lib/constants'; 
-import { validateTodoText } from '@/utils/validation';
-import type { TodoFormData } from '@/types';
+import { Flag, Calendar } from 'lucide-react';
+import { formatLocalYYYYMMDD } from '@/lib/date-utils';
 import styles from './TodoForm.module.css';
 
-export interface TodoFormProps {
-  onSubmit: (data: TodoFormData) => Promise<void>;
-  isLoading?: boolean;
-}
-
-export const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, isLoading = false }) => {
-  // Hooks de traducción
-  const t = useTranslations('todo');
-  const tDueDate = useTranslations('dueDate');
-  const tCommon = useTranslations('common');
-  const tErrors = useTranslations('errors');
+export const TodoForm = ({ onSubmit, isLoading, defaultDate, hideControls = false }: any) => {
+  const t = useTranslations('todo'); // ✅ Traducciones de Todo
+  const tPrio = useTranslations('priorities'); // ✅ Traducciones de Prioridades
 
   const [text, setText] = useState('');
-  const [dueDate, setDueDate] = useState<string>('');
-  const [error, setError] = useState('');
+  const [priority, setPriority] = useState('normal'); 
+  const [dueDate, setDueDate] = useState('');
 
-  const charCount = text.trim().length;
-  const isValid = validateTodoText(text);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    
-    if (!isValid) {
-      setError(tErrors('todoEmpty')); // Texto traducido
-      return;
-    }
-    
-    try {
-      await onSubmit({ text: text.trim(), dueDate: dueDate ? new Date(dueDate) : null });
-      setText('');
+  useEffect(() => {
+    if (defaultDate) {
+      setDueDate(formatLocalYYYYMMDD(defaultDate));
+    } else {
       setDueDate('');
-    } catch (err) {
-      setError(tErrors('createFailed')); // Texto traducido
     }
+  }, [defaultDate]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    
+    const finalPriority = hideControls ? 'normal' : priority;
+    const finalDate = (hideControls || !dueDate) ? null : new Date(`${dueDate}T12:00:00`);
+
+    onSubmit({
+      text: text.trim(),
+      priority: finalPriority,
+      dueDate: finalDate,
+    });
+    setText('');
+    setPriority('normal');
   };
 
-  const today = new Date().toISOString().split('T')[0];
-
   return (
-    <form onSubmit={handleSubmit} className={styles.form} aria-label={t('add')}>
-      <div className={styles.inputGroup}>
-        <div className={styles.inputWrapper}>
-          <Input
-            type="text"
-            placeholder={t('addPlaceholder')} // Traducido
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            maxLength={MAX_TODO_LENGTH}
-            showCharacterCount
-            currentLength={charCount}
-            error={error}
-            disabled={isLoading}
-            autoFocus
-            aria-label={t('addPlaceholder')} // Traducido
-          />
-        </div>
-        <Button type="submit" variant="primary" disabled={!isValid || isLoading}>
-          {isLoading ? tCommon('loading') : t('addButton')} 
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div className={styles.mainInput}>
+        <Input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={t('addPlaceholder')} // "Qué necesitas hacer?" / "What needs to be done?"
+          disabled={isLoading}
+          autoFocus
+        />
+        <Button type="submit" disabled={!text || isLoading}>
+          {isLoading ? t('adding') : t('addButton')}
         </Button>
       </div>
 
-      <details>
-        <summary className={styles.dateToggle}>
-          <span>📅 {tDueDate('addDueDate')} (opcional)</span>
-        </summary>
-        <div className={styles.dateInputContainer}>
-          <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            min={today}
-            className={styles.dateInput}
-          />
-          {dueDate && (
-            <button type="button" onClick={() => setDueDate('')} className={styles.clearBtn}>
-              {tDueDate('removeDueDate')}
-            </button>
-          )}
+      {!hideControls && (
+        <div className={styles.controls}>
+          <div className={styles.dateControl}>
+            <Calendar size={16} className={styles.icon} />
+            <input 
+              type="date" 
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className={styles.dateInput}
+            />
+          </div>
+
+          <div className={styles.priorityGroup}>
+            {[
+              { value: 'high', color: '#ef4444', label: tPrio('high') },
+              { value: 'normal', color: '#3b82f6', label: tPrio('normal') },
+              { value: 'low', color: '#9ca3af', label: tPrio('low') },
+            ].map((p) => (
+              <button
+                key={p.value}
+                type="button"
+                onClick={() => setPriority(p.value)}
+                className={`${styles.flagBtn} ${priority === p.value ? styles.activeFlag : ''}`}
+                title={p.label}
+                style={{ color: p.color }}
+              >
+                <Flag size={18} fill={priority === p.value ? "currentColor" : "none"} />
+              </button>
+            ))}
+          </div>
         </div>
-      </details>
+      )}
     </form>
   );
 };

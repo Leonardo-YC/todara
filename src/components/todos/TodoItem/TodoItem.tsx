@@ -1,111 +1,67 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useTranslations, useLocale } from 'next-intl'; // <--- Importamos hooks de traducción
+import React from 'react';
 import { Checkbox } from '@/components/ui/Checkbox';
-import { Button } from '@/components/ui/Button';
-import { Modal } from '@/components/ui/Modal';
-import { Badge } from '@/components/ui/Badge';
-import { Input } from '@/components/ui/Input';
-import { isOverdue, getRelativeTime } from '@/utils/date-format';
-import { validateTodoText } from '@/utils/validation';
-import { getAriaLabel } from '@/lib/constants/aria-labels';
+import { Flag, Edit2, Trash2 } from 'lucide-react';
+import { formatFriendlyDate, isOverdue } from '@/lib/date-utils';
 import { cn } from '@/lib/utils';
-import type { Todo } from '@/types';
+import type { TodoItemProps } from '@/types';
 import styles from './TodoItem.module.css';
 
-export interface TodoItemProps {
-  todo: Todo;
-  onToggle: (id: string) => void;
-  onEdit: (id: string, text: string) => void;
-  onDelete: (id: string) => void;
-  // locale ya no es necesario como prop porque usamos el hook, pero lo dejamos opcional para compatibilidad
-  locale?: string;
-}
-
 export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onEdit, onDelete }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(todo.text);
-  const [isDeleting, setIsDeleting] = useState(false);
   
-  // Hooks para traducción y fecha
-  const tDate = useTranslations('dueDate'); // Usamos tu sección existente 'dueDate'
-  const currentLocale = useLocale();
-
-  const handleSave = () => {
-    if (validateTodoText(editText)) {
-      onEdit(todo.id, editText.trim());
-      setIsEditing(false);
-    }
+  const priorityColors: Record<string, string> = {
+    high: '#ef4444',   // Rojo
+    normal: '#3b82f6', // Azul
+    low: '#9ca3af'     // Gris
   };
 
-  const isDueDateOverdue = todo.dueDate ? isOverdue(todo.dueDate) : false;
-
-  // Preparamos las traducciones para la función de fecha
-  const dateTranslations = {
-    today: tDate('today'),
-    tomorrow: tDate('tomorrow'),
-    yesterday: tDate('yesterday')
-  };
+  const isLate = isOverdue(todo.dueDate) && !todo.completed;
+  
+  // Obtenemos el color actual
+  const flagColor = todo.priority ? priorityColors[todo.priority] : priorityColors.normal;
 
   return (
-    <>
-      <li className={styles.item}>
-        <div style={{ paddingTop: '0.25rem' }}>
-          <Checkbox
-            checked={todo.completed}
-            onChange={() => onToggle(todo.id)}
-            aria-label={getAriaLabel.markComplete(todo.text, todo.completed)}
-          />
-        </div>
+    <li className={cn(styles.item, todo.completed && styles.completed)}>
+      <div className={styles.checkWrapper}>
+        <Checkbox
+          checked={todo.completed}
+          onChange={() => onToggle(todo.id)}
+        />
+      </div>
 
-        <div className={styles.content}>
-          {isEditing ? (
-            <Input
-              value={editText}
-              onChange={(e) => setEditText(e.target.value)}
-              onBlur={handleSave}
-              onKeyDown={(e) => e.key === 'Enter' && handleSave()}
-              autoFocus
-            />
-          ) : (
-            <div>
-              <p className={cn(styles.text, todo.completed && styles.completedText)}>
-                {todo.text}
-              </p>
-              {todo.dueDate && (
-                <div className={styles.meta}>
-                  <Badge variant={isDueDateOverdue ? 'danger' : 'default'}>
-                    {isDueDateOverdue && '⚠️ '}
-                    {/* Pasamos los 3 argumentos: fecha, traducciones, e idioma */}
-                    {getRelativeTime(todo.dueDate, dateTranslations, currentLocale as any)}
-                  </Badge>
-                </div>
-              )}
-            </div>
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <p className={styles.text}>{todo.text}</p>
+          
+          {/* ✅ CORRECCIÓN PRO: Solo mostramos la bandera si NO es normal.
+              Así el Inbox se ve limpio, y solo resaltan las tareas Altas o Bajas. */}
+          {todo.priority && todo.priority !== 'normal' && (
+             <Flag 
+               size={16} 
+               style={{ color: flagColor, fill: 'currentColor' }} 
+             />
           )}
         </div>
-
-        <div className={styles.actions}>
-           {!isEditing && (
-             <>
-               <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)}>✏️</Button>
-               <Button variant="ghost" size="sm" onClick={() => setIsDeleting(true)}>🗑️</Button>
-             </>
+        
+        <div className={styles.meta}>
+           {todo.dueDate && (
+             <span className={cn(styles.date, isLate && styles.overdue)}>
+                {isLate && '⚠️ '} 
+                {formatFriendlyDate(todo.dueDate)}
+             </span>
            )}
         </div>
-      </li>
+      </div>
 
-      <Modal
-        isOpen={isDeleting}
-        onClose={() => setIsDeleting(false)}
-        title="¿Eliminar tarea?"
-        variant="danger"
-        confirmText="Eliminar"
-        onConfirm={() => onDelete(todo.id)}
-      >
-        <p>¿Estás seguro de que quieres eliminar "<strong>{todo.text}</strong>"?</p>
-      </Modal>
-    </>
+      <div className={styles.actions}>
+        <button onClick={() => onEdit(todo)} className={styles.actionBtn}>
+          <Edit2 size={16} />
+        </button>
+        <button onClick={() => onDelete(todo.id)} className={styles.actionBtn}>
+          <Trash2 size={16} />
+        </button>
+      </div>
+    </li>
   );
 };

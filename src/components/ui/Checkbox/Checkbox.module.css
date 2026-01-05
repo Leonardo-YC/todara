@@ -1,76 +1,79 @@
 .label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    user-select: none;
-  }
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.labelDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Input oculto */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Caja visual */
+.checkboxBox {
+  position: relative;
+  display: flex;
+  height: 1.25rem;
+  width: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
   
-  .labelDisabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
+  /* Variables adaptables */
+  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-primary);
   
-  /* El input nativo lo ocultamos pero lo dejamos accesible */
-  .input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-  
-  /* Nuestra caja visual customizada */
-  .checkboxBox {
-    position: relative;
-    display: flex;
-    height: 1.25rem; /* 20px */
-    width: 1.25rem; /* 20px */
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.25rem;
-    border: 2px solid var(--color-border);
-    background-color: var(--color-bg-primary);
-    transition: all 0.2s ease-in-out;
-  }
-  
-  /* Estado Focus (Teclado) */
-  .input:focus-visible + .checkboxBox {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
-    border-color: var(--color-primary-600);
-  }
-  
-  /* Estado Checked */
-  .checked {
-    background-color: var(--color-primary-600);
-    border-color: var(--color-primary-600);
-  }
-  
-  .checkboxBox:hover {
-    border-color: var(--color-primary-500);
-  }
-  
-  /* Icono (Checkmark) */
-  .icon {
-    height: 0.75rem; /* 12px */
-    width: 0.75rem;
-    color: white;
-    opacity: 0;
-    transform: scale(0);
-    transition: transform 0.2s ease-in-out, opacity 0.2s;
-  }
-  
-  .iconVisible {
-    opacity: 1;
-    transform: scale(1);
-  }
-  
-  .labelText {
-    font-size: 1rem;
-    color: var(--color-text-primary);
-  }
+  transition: all 0.2s ease-in-out;
+}
+
+/* Focus */
+.input:focus-visible + .checkboxBox {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--color-primary-600);
+}
+
+/* Checked */
+.checked {
+  background-color: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+}
+
+.checkboxBox:hover {
+  border-color: var(--color-primary-500);
+}
+
+/* Icono */
+.icon {
+  height: 0.75rem;
+  width: 0.75rem;
+  color: white; /* El check siempre es blanco */
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.2s ease-in-out, opacity 0.2s;
+}
+
+.iconVisible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.labelText {
+  font-size: 1rem;
+  color: var(--color-text-primary);
+}

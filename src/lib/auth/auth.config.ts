@@ -1,8 +1,6 @@
 import type { NextAuthConfig } from 'next-auth';
 
-// Esta configuración es segura para el Edge (Middleware)
 export const authConfig: NextAuthConfig = {
-  // Dejamos providers vacío aquí para evitar errores de Node.js en el Edge
   providers: [], 
   
   session: {
@@ -17,27 +15,31 @@ export const authConfig: NextAuthConfig = {
   },
 
   callbacks: {
+    // 1. Cuando se genera el token, guardamos el nombre si existe
+    async jwt({ token, user, trigger, session }) {
+      if (user) {
+        token.sub = user.id!;
+        token.name = user.name; // Guardar nombre inicial
+      }
+
+      // ✅ FIX CLAVE: Si se dispara una actualización manual (update()), actualizamos el token
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
+      }
+      
+      return token;
+    },
+    // 2. Cuando el cliente pide la sesión, le pasamos lo que hay en el token
     async session({ session, token }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
+        session.user.name = token.name; // ✅ Pasamos el nombre actualizado al cliente
       }
       return session;
     },
-    async jwt({ token, user }) {
-      if (user) {
-        token.sub = user.id!;
-      }
-      return token;
-    },
     authorized({ auth, request: { nextUrl } }) {
-      // Lógica de protección de rutas (Middleware)
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard'); // Ejemplo
-      
-      // Permitir acceso a la API de Auth siempre
       if (nextUrl.pathname.startsWith('/api/auth')) return true;
-
-      // Aquí puedes agregar más lógica si la necesitas
       return true; 
     },
   },

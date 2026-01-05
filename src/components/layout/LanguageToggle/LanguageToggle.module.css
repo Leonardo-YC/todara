@@ -3,9 +3,13 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem;
+  
+  /* Fondo adaptable (gris claro día / gris oscuro noche) */
   background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 0.5rem;
-  border: 1px solid var(--color-border); /* Agregamos borde para mejor definición */
+  
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .button {
@@ -16,7 +20,9 @@
   border: none;
   cursor: pointer;
   background: transparent;
+  
   color: var(--color-text-secondary);
+  
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
@@ -24,33 +30,24 @@
 }
 
 .button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  /* Hover sutil adaptable */
+  background-color: rgba(125, 125, 125, 0.1); 
   color: var(--color-text-primary);
 }
 
-/* Estado Activo (Botón Seleccionado) */
+/* Estado Activo */
 .active {
-  background-color: var(--color-bg-primary); /* Fondo blanco en light mode */
+  /* Fondo tarjeta (blanco día / negro noche) */
+  background-color: var(--color-bg-primary);
   color: var(--color-primary-600);
+  
+  /* Sombra para levantar el botón */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.active:hover {
-  background-color: var(--color-bg-primary);
-}
-
-/* Soporte básico para Modo Oscuro (opcional pero recomendado) */
-@media (prefers-color-scheme: dark) {
-  .button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .active {
-    background-color: var(--color-primary-600); /* Azul sólido en dark mode */
-    color: white;
-  }
-  
-  .active:hover {
-    background-color: var(--color-primary-600);
-  }
+/* Ajuste Dark Mode específico para que resalte más el activo */
+:global(.dark) .active {
+  background-color: var(--color-primary-600);
+  color: #ffffff;
+  box-shadow: none;
 }

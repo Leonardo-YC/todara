@@ -1,31 +1,75 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { SkipLink } from '../SkipLink'; // Importación limpia gracias al index.ts
-import { LanguageToggle } from '../LanguageToggle'; // Importación limpia corregida
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { useTheme } from 'next-themes';
+import { useTranslations, useLocale } from 'next-intl'; // ✅ Importamos useLocale
+import { UserAvatar } from '@/components/shared/UserAvatar';
+import { SkipLink } from '../SkipLink';
+import { LanguageToggle } from '../LanguageToggle';
+import { ThemeToggle } from '../ThemeToggle';
 import styles from './Header.module.css';
 
 interface HeaderProps {
   locale?: string;
 }
 
-export function Header({ locale = 'es' }: HeaderProps) {
+export function Header({ locale: propLocale = 'es' }: HeaderProps) {
+  const { data: session } = useSession();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const t = useTranslations('nav');
+  const currentLocale = useLocale(); // ✅ Obtenemos el idioma actual dinámicamente
+
+  useEffect(() => { setMounted(true); }, []);
+
+  const logoSrc = mounted && resolvedTheme === 'dark' 
+    ? '/icons/icon-white-192x192.png' 
+    : '/icons/icon-192x192.png';
+
+  const userName = session?.user?.name || session?.user?.email?.split('@')[0] || 'Usuario';
+
   return (
     <>
       <SkipLink />
       
       <header role="banner" className={styles.header}>
         <div className={styles.container}>
-          {/* Logo/Marca */}
-          <Link href="/" aria-label="Ir al inicio de Todara" className={styles.brand}>
-            <div className={styles.logoBox} aria-hidden="true">✓</div>
+          {/* ✅ Enlace dinámico: Mantiene /en o /es */}
+          <Link href={`/${currentLocale}`} aria-label="Ir al inicio" className={styles.brand}>
+            <div className={styles.logoWrapper}>
+              <Image 
+                src={logoSrc} 
+                alt="Logo Todara" 
+                width={50} 
+                height={50} 
+                className={styles.logoImage}
+                priority
+              />
+            </div>
             <span className={styles.brandName}>Todara</span>
           </Link>
 
-          {/* Título oculto para lectores de pantalla */}
-          <h1 className="sr-only">Todara - La App de Tareas Perfecta</h1>
+          <nav className={styles.nav}>
+            <div className={styles.toggles}>
+               <LanguageToggle currentLocale={currentLocale as 'en' | 'es'} />
+               <ThemeToggle />
+            </div>
 
-          {/* Navegación */}
-          <nav aria-label="Navegación principal" className={styles.nav}>
-            <LanguageToggle currentLocale={locale as 'en' | 'es'} />
+            {session ? (
+              <Link href="/profile" className={styles.profileLink}>
+                <div className={styles.userInfo}>
+                    <span className={styles.userName}>{userName}</span>
+                    <UserAvatar name={userName} image={session.user?.image} size={32} />
+                </div>
+              </Link>
+            ) : (
+              <Link href="/api/auth/signin" className={styles.loginBtn}>
+                {t('login')}
+              </Link>
+            )}
           </nav>
         </div>
       </header>

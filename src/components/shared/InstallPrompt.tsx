@@ -2,33 +2,27 @@
 
 import { useEffect, useState } from 'react';
 import { Download, X } from 'lucide-react';
+import { useTranslations } from 'next-intl'; // ✅ Importar
 
 export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showPrompt, setShowPrompt] = useState(false);
+  const t = useTranslations('install'); // ✅ Cargar traducciones
 
   useEffect(() => {
-    // Escuchar el evento del navegador que dice "Esta app se puede instalar"
     const handler = (e: any) => {
-      e.preventDefault(); // Prevenir el banner nativo feo de Chrome
+      e.preventDefault();
       setDeferredPrompt(e);
-      
-      // Mostrar nuestro aviso personalizado después de 3 segundos
       setTimeout(() => setShowPrompt(true), 3000);
     };
 
     window.addEventListener('beforeinstallprompt', handler);
-
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
-    
-    // Mostrar el prompt nativo
     await deferredPrompt.prompt();
-    
-    // Limpiar
     setDeferredPrompt(null);
     setShowPrompt(false);
   };
@@ -44,8 +38,9 @@ export function InstallPrompt() {
               <Download className="text-blue-600 w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 dark:text-white">Instalar Todara</h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Accede más rápido y úsala sin conexión.</p>
+              {/* ✅ Usar traducciones */}
+              <h3 className="font-bold text-slate-900 dark:text-white">{t('title')}</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{t('desc')}</p>
             </div>
           </div>
           <button onClick={() => setShowPrompt(false)} className="text-slate-400 hover:text-slate-600">
@@ -56,7 +51,7 @@ export function InstallPrompt() {
           onClick={handleInstall}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md transition-colors"
         >
-          Instalar App
+          {t('btn')}
         </button>
       </div>
     </div>
