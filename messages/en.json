@@ -1,24 +1,103 @@
 {
   "app": {
-    "title": "TodoPerfect",
-    "description": "The perfect todo app - demonstrating excellence in fundamentals",
+    "title": "Todara",
+    "description": "The perfect todo app",
     "tagline": "Manage your tasks efficiently"
   },
+  "landing": {
+    "title": "Organize your life with",
+    "subtitle": "The todo app designed with boutique architecture by <bold>LYC Labs</bold> for people who value excellence.",
+    "cta": "Start for Free"
+  },
+  "nav": {
+    "today": "Today",
+    "inbox": "Inbox",
+    "upcoming": "Upcoming",
+    "upcomingShort": "Upcoming",
+    "overdue": "Overdue",
+    "completed": "Completed",
+    "done": "Done",
+    "login": "Sign In"
+  },
+  "priorities": {
+    "high": "High",
+    "normal": "Normal",
+    "low": "Low",
+    "label": "Priority:"
+  },
+  "pagination": {
+    "prev": "Previous",
+    "next": "Next",
+    "info": "Page <bold>{current}</bold> of {total}"
+  },
+  "auth": {
+    "welcome": "Welcome to {appName}",
+    "subtitle": "Sign in to sync your tasks",
+    "google": "Continue with Google",
+    "github": "Continue with GitHub",
+    "emailDivider": "Or use your email",
+    "emailPlaceholder": "name@example.com",
+    "magicLink": "Send magic link",
+    "sending": "Sending...",
+    "backToHome": "Back to home",
+    "signOut": "Sign Out"
+  },
+  "authError": {
+    "title": "Authentication Error",
+    "config": "There was a problem with the server configuration.",
+    "access": "The access link is invalid or has expired.",
+    "retry": "Try again"
+  },
+  "verify": {
+    "title": "Check your email 📬",
+    "sent": "We sent a <bold>magic link</bold> to your inbox.",
+    "click": "Click it to sign in automatically.",
+    "spam": "Didn't receive it? Check your spam folder."
+  },
+  "profile": {
+    "title": "My Profile",
+    "username": "Username",
+    "placeholderName": "Your name",
+    "saving": "Saving...",
+    "saved": "Saved!",
+    "save": "Save",
+    "dangerZone": "Danger Zone",
+    "deleteWarning": "Deleting your account will permanently remove all your tasks.",
+    "deleteBtn": "Delete my account",
+    "backToTasks": "Back to Tasks",
+    "modalTitle": "Delete Account?",
+    "modalMsg": "Are you sure? This action cannot be undone and you will lose all your tasks.",
+    "modalConfirm": "Yes, goodbye forever"
+  },
+  "install": {
+    "title": "Install Todara",
+    "desc": "Access faster and use offline.",
+    "btn": "Install App"
+  },
+  "footer": {
+    "copyright": "Crafted with excellence by",
+    "dev": "Dev",
+    "itemsLeft": "{count, plural, one {# item left} other {# items left}}",
+    "clearCompleted": "Clear completed",
+    "noItems": "No items"
+  },
   "todo": {
+    "titleMain": "My Tasks",
+    "tasksCount": "{count, plural, one {1 task} other {# tasks}}",
+    "cleanAll": "Clear All",
     "addPlaceholder": "What needs to be done?",
     "addButton": "Add",
+    "adding": "...",
     "add": "Add Todo",
+    "editTitle": "Edit Todo",
+    "dateLabel": "Date:",
     "edit": "Edit",
     "delete": "Delete",
-    "save": "Save",
+    "save": "Save Changes",
     "cancel": "Cancel",
-    "markComplete": "Mark as complete",
-    "markIncomplete": "Mark as incomplete",
-    "completed": "Completed",
-    "active": "Active",
-    "noTodos": "No todos yet. Add one above!",
-    "noActiveTodos": "All done! 🎉",
-    "noCompletedTodos": "No completed todos yet"
+    "loading": "Loading tasks...",
+    "empty": "No tasks here.",
+    "emptyInbox": "No pending tasks."
   },
   "filters": {
     "all": "All",
@@ -27,11 +106,6 @@
     "showAll": "Show all todos",
     "showActive": "Show active todos",
     "showCompleted": "Show completed todos"
-  },
-  "footer": {
-    "itemsLeft": "{count, plural, one {# item left} other {# items left}}",
-    "clearCompleted": "Clear completed",
-    "noItems": "No items"
   },
   "modals": {
     "deleteTodo": {
@@ -42,9 +116,9 @@
       "cancel": "Cancel"
     },
     "clearCompleted": {
-      "title": "Clear completed todos?",
-      "message": "This will delete {count} completed {count, plural, one {todo} other {todos}}.",
-      "confirm": "Clear All",
+      "title": "Clear Completed?",
+      "message": "Are you sure you want to delete all completed tasks?",
+      "confirm": "Yes, clear all",
       "cancel": "Cancel"
     }
   },

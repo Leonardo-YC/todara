@@ -1,24 +1,103 @@
 {
   "app": {
-    "title": "TodoPerfect",
-    "description": "La aplicación perfecta de tareas - demostrando excelencia en los fundamentos",
+    "title": "Todara",
+    "description": "La aplicación perfecta de tareas",
     "tagline": "Gestiona tus tareas eficientemente"
   },
+  "landing": {
+    "title": "Organiza tu vida con",
+    "subtitle": "La aplicación de tareas diseñada con arquitectura boutique por <bold>LYC Labs</bold> para personas que valoran la excelencia.",
+    "cta": "Comenzar Gratis"
+  },
+  "nav": {
+    "today": "Hoy",
+    "inbox": "Inbox",
+    "upcoming": "Próximo",
+    "upcomingShort": "Próx",
+    "overdue": "Atrasadas",
+    "completed": "Completadas",
+    "done": "Hecho",
+    "login": "Ingresar"
+  },
+  "priorities": {
+    "high": "Alta",
+    "normal": "Normal",
+    "low": "Baja",
+    "label": "Prioridad:"
+  },
+  "pagination": {
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "info": "Página <bold>{current}</bold> de {total}"
+  },
+  "auth": {
+    "welcome": "Bienvenido a {appName}",
+    "subtitle": "Inicia sesión para sincronizar tus tareas",
+    "google": "Continuar con Google",
+    "github": "Continuar con GitHub",
+    "emailDivider": "O usa tu correo",
+    "emailPlaceholder": "nombre@ejemplo.com",
+    "magicLink": "Enviar enlace mágico",
+    "sending": "Enviando...",
+    "backToHome": "Volver al inicio",
+    "signOut": "Cerrar Sesión"
+  },
+  "authError": {
+    "title": "Error de Autenticación",
+    "config": "Hubo un problema con la configuración del servidor.",
+    "access": "El enlace de acceso no es válido o ha expirado.",
+    "retry": "Intentar de nuevo"
+  },
+  "verify": {
+    "title": "Revisa tu correo 📬",
+    "sent": "Hemos enviado un <bold>enlace mágico</bold> a tu bandeja de entrada.",
+    "click": "Haz clic en él para iniciar sesión automáticamente.",
+    "spam": "¿No lo recibiste? Revisa tu carpeta de spam."
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "username": "Nombre de usuario",
+    "placeholderName": "Tu nombre",
+    "saving": "Guardando...",
+    "saved": "¡Guardado!",
+    "save": "Guardar",
+    "dangerZone": "Zona de Peligro",
+    "deleteWarning": "Borrar tu cuenta eliminará todas tus tareas permanentemente.",
+    "deleteBtn": "Eliminar mi cuenta",
+    "backToTasks": "Volver a Tareas",
+    "modalTitle": "¿Eliminar Cuenta?",
+    "modalMsg": "¿Estás seguro? Esta acción no se puede deshacer y perderás todas tus tareas.",
+    "modalConfirm": "Sí, adiós para siempre"
+  },
+  "install": {
+    "title": "Instalar Todara",
+    "desc": "Accede más rápido y úsala sin conexión.",
+    "btn": "Instalar App"
+  },
+  "footer": {
+    "copyright": "Hecho con excelencia por",
+    "dev": "Dev",
+    "itemsLeft": "{count, plural, one {# tarea pendiente} other {# tareas pendientes}}",
+    "clearCompleted": "Limpiar completadas",
+    "noItems": "No hay tareas"
+  },
   "todo": {
+    "titleMain": "Mis Tareas",
+    "tasksCount": "{count, plural, one {1 tarea} other {# tareas}}",
+    "cleanAll": "Limpiar Todo",
     "addPlaceholder": "¿Qué necesitas hacer?",
     "addButton": "Agregar",
+    "adding": "...",
     "add": "Agregar Tarea",
+    "editTitle": "Editar Tarea",
+    "dateLabel": "Fecha:",
     "edit": "Editar",
     "delete": "Eliminar",
-    "save": "Guardar",
+    "save": "Guardar Cambios",
     "cancel": "Cancelar",
-    "markComplete": "Marcar como completada",
-    "markIncomplete": "Marcar como pendiente",
-    "completed": "Completada",
-    "active": "Activa",
-    "noTodos": "No hay tareas aún. ¡Agrega una arriba!",
-    "noActiveTodos": "¡Todo listo! 🎉",
-    "noCompletedTodos": "No hay tareas completadas aún"
+    "loading": "Cargando tareas...",
+    "empty": "No hay tareas aquí.",
+    "emptyInbox": "No hay tareas pendientes."
   },
   "filters": {
     "all": "Todas",
@@ -27,11 +106,6 @@
     "showAll": "Mostrar todas las tareas",
     "showActive": "Mostrar tareas activas",
     "showCompleted": "Mostrar tareas completadas"
-  },
-  "footer": {
-    "itemsLeft": "{count, plural, one {# tarea pendiente} other {# tareas pendientes}}",
-    "clearCompleted": "Limpiar completadas",
-    "noItems": "No hay tareas"
   },
   "modals": {
     "deleteTodo": {
@@ -42,9 +116,9 @@
       "cancel": "Cancelar"
     },
     "clearCompleted": {
-      "title": "¿Limpiar tareas completadas?",
-      "message": "Esto eliminará {count} {count, plural, one {tarea} other {tareas}} completadas.",
-      "confirm": "Limpiar Todas",
+      "title": "¿Limpiar Completadas?",
+      "message": "¿Estás seguro de que quieres borrar todas las tareas completadas?",
+      "confirm": "Sí, eliminar todo",
       "cancel": "Cancelar"
     }
   },
@@ -54,10 +128,10 @@
     "overdue": "Vencida",
     "today": "Hoy",
     "tomorrow": "Mañana",
-    "yesterday": "Ayer",
-    "addDueDate": "Agregar fecha de vencimiento",
-    "removeDueDate": "Quitar fecha de vencimiento",
-    "selectDate": "Seleccionar fecha"
+    "yesterday": "Yesterday",
+    "addDueDate": "Add due date",
+    "removeDueDate": "Remove due date",
+    "selectDate": "Select date"
   },
   "errors": {
     "todoEmpty": "La tarea no puede estar vacía",
@@ -77,8 +151,8 @@
     "todosCleared": "{count} {count, plural, one {tarea} other {tareas}} eliminadas"
   },
   "a11y": {
-    "skipToMain": "Saltar al contenido principal",
-    "changeLanguage": "Cambiar idioma",
+    "skipToMain": "Skip to main content",
+    "changeLanguage": "Change language",
     "todoList": "Lista de tareas",
     "newTodo": "Campo para nueva tarea",
     "loading": "Cargando",
