@@ -1,0 +1,27 @@
+name: CI Lite
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Check Build
+        run: npm run build
+        env:
+          # Saltamos validaciones estrictas para que el check pase rápido
+          SKIP_ENV_VALIDATION: true 
+          # Definimos variables dummy para que el build no falle por falta de ellas
+          NEXT_PUBLIC_SENTRY_DSN: "https://example.com"
