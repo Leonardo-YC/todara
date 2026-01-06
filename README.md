@@ -15,7 +15,6 @@
 👉 **[https://todara.app](https://todara.app)** *(Link pendiente de deploy)*
 
 ![App Screenshot](/public/icons/logo.svg)
-*(Reemplaza esto con una captura de pantalla real de tu app luego)*
 
 ---
 
