@@ -16,8 +16,8 @@ export default function VerifyPage() {
   }, []);
 
   const logoSrc = mounted && resolvedTheme === 'dark' 
-    ? '/icons/icon-white-192x192.png' 
-    : '/icons/icon-192x192.png';
+    ? '/icons/icon-white-192x192.svg' 
+    : '/icons/icon-192x192.svg';
 
   return (
     <div className={styles.container}>

@@ -22,8 +22,8 @@ export default function SignInPage() {
   useEffect(() => { setMounted(true); }, []);
 
   const logoSrc = mounted && resolvedTheme === 'dark' 
-    ? '/icons/icon-white-192x192.png' 
-    : '/icons/icon-192x192.png';
+    ? '/icons/icon-white-192x192.svg' 
+    : '/icons/icon-192x192.svg';
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -26,8 +26,8 @@ export function Header({ locale: propLocale = 'es' }: HeaderProps) {
   useEffect(() => { setMounted(true); }, []);
 
   const logoSrc = mounted && resolvedTheme === 'dark' 
-    ? '/icons/icon-white-192x192.png' 
-    : '/icons/icon-192x192.png';
+    ? '/icons/icon-white-192x192.svg' 
+    : '/icons/icon-192x192.svg';
 
   const userName = session?.user?.name || session?.user?.email?.split('@')[0] || 'Usuario';
 
