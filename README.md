@@ -12,7 +12,7 @@
 ---
 
 ## 🚀 Live Demo / Demo en Vivo
-👉 **[https://todara.app](https://todara.app)** *(Link pendiente de deploy)*
+👉 **[todara.vercel.app](todara.vercel.app)**
 
 ![App Screenshot](/public/icons/logo.svg)
 

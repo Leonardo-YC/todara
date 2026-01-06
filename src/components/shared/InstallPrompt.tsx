@@ -2,18 +2,27 @@
 
 import { useEffect, useState } from 'react';
 import { Download, X } from 'lucide-react';
-import { useTranslations } from 'next-intl'; // ✅ Importar
+import { useTranslations } from 'next-intl';
 
 export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showPrompt, setShowPrompt] = useState(false);
-  const t = useTranslations('install'); // ✅ Cargar traducciones
+  const t = useTranslations('install');
 
   useEffect(() => {
+    // 1. Verificamos si ya está instalada como App
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    if (isStandalone) return;
+
+    // 2. Verificamos si el usuario ya lo cerró antes (La memoria)
+    const hasClosed = localStorage.getItem('pwa_prompt_closed');
+    if (hasClosed) return;
+
     const handler = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setTimeout(() => setShowPrompt(true), 3000);
+      // Mostramos el banner
+      setShowPrompt(true);
     };
 
     window.addEventListener('beforeinstallprompt', handler);
@@ -23,8 +32,18 @@ export function InstallPrompt() {
   const handleInstall = async () => {
     if (!deferredPrompt) return;
     await deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      setShowPrompt(false);
+    }
     setDeferredPrompt(null);
+  };
+
+  // ✅ Nueva función para cerrar y GUARDAR la decisión
+  const handleClose = () => {
     setShowPrompt(false);
+    localStorage.setItem('pwa_prompt_closed', 'true');
   };
 
   if (!showPrompt) return null;
@@ -38,12 +57,13 @@ export function InstallPrompt() {
               <Download className="text-blue-600 w-5 h-5" />
             </div>
             <div>
-              {/* ✅ Usar traducciones */}
+              {/* Mantenemos tus traducciones */}
               <h3 className="font-bold text-slate-900 dark:text-white">{t('title')}</h3>
               <p className="text-sm text-slate-500 dark:text-slate-400">{t('desc')}</p>
             </div>
           </div>
-          <button onClick={() => setShowPrompt(false)} className="text-slate-400 hover:text-slate-600">
+          {/* Usamos la nueva función handleClose */}
+          <button onClick={handleClose} className="text-slate-400 hover:text-slate-600">
             <X size={20} />
           </button>
         </div>
