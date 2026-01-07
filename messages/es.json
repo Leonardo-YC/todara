@@ -187,5 +187,10 @@
     "success": "Éxito",
     "retry": "Reintentar",
     "back": "Volver"
+  },
+  "cookies": {
+    "text": "🍪 Usamos cookies para mejorar tu experiencia y mantener tu sesión segura. Al continuar navegando, aceptas nuestra política de privacidad.",
+    "accept": "Aceptar todo",
+    "decline": "Rechazar"
   }
 }

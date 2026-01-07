@@ -10,8 +10,7 @@ import { Header } from '@/components/layout/Header/Header';
 import { Sidebar } from '@/components/layout/Sidebar/Sidebar';
 import { MobileNav } from '@/components/layout/MobileNav/MobileNav';
 import { SiteFooter } from '@/components/layout/SiteFooter/SiteFooter'; 
-import { OfflineBanner } from '@/components/shared/OfflineBanner';
-import { InstallPrompt } from '@/components/shared/InstallPrompt';
+import { OfflineBanner, InstallPrompt, CookieConsent } from '@/components/shared';
 import { auth } from '@/lib/auth/auth'; 
 import styles from './layout.module.css';
 import '../globals.css';
@@ -25,7 +24,6 @@ const inter = Inter({
 
 const locales = ['en', 'es'];
 
-// ✅ AQUÍ ESTÁ EL CAMBIO CLAVE PARA LOS FAVICONS
 export const metadata = {
   title: { template: `%s | ${APP_NAME}`, default: APP_NAME },
   description: APP_DESCRIPTION,
@@ -68,6 +66,7 @@ export default async function LocaleLayout({
                 
                 <OfflineBanner />
                 <InstallPrompt />
+                <CookieConsent />
                 
                 <Header locale={locale} />
                 
@@ -81,6 +80,11 @@ export default async function LocaleLayout({
                 
                 {session && <MobileNav />}
                 
+                {/* Lógica del Footer:
+                   - Siempre se muestra (SiteFooter).
+                   - Si hay sesión, le aplicamos la clase 'footerContainer' 
+                     que tiene el padding-bottom extra para que el MobileNav no lo tape.
+                */}
                 <div className={session ? styles.footerContainer : ''}>
                   <SiteFooter /> 
                 </div>
