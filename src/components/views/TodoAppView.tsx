@@ -12,7 +12,7 @@ import { isToday, isFuture } from 'date-fns';
 import { isOverdue } from '@/lib/date-utils'; 
 import { ChevronLeft, ChevronRight } from 'lucide-react'; 
 import type { Todo } from '@/types';
-import styles from '@/app/[locale]/page.module.css';
+import styles from './TodoAppView.module.css';
 
 const ITEMS_PER_PAGE = 20;
 

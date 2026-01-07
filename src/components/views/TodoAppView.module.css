@@ -1,0 +1,59 @@
+/* src/components/views/TodoAppView.module.css */
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    /* Hacemos que este contenedor ocupe el espacio disponible */
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-text-primary); 
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  
+  .subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+  }
+  
+  /* Alertas (Si las usas dentro de la vista) */
+  .banner {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .offline {
+    background-color: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+  }
+  
+  .error {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+  
+  .contentStack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }

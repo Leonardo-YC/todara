@@ -1,0 +1,128 @@
+/* src/views/Landing/LandingView.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 65vh; /* Un poco más de aire */
+    text-align: center;
+    padding: 1rem;
+    overflow: hidden; /* Evita scrolls raros si algo se mueve */
+  }
+  
+  /* --- ANIMACIÓN DE ENTRADA (Fade In Up) --- */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* --- ELEMENTOS --- */
+  
+  .logoWrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 2rem;
+    
+    /* Animación 1: Entra de inmediato */
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0; /* Empieza invisible */
+    animation-delay: 0.1s;
+  }
+  
+  .logoImage {
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1)); /* Sombra sutil al logo */
+  }
+  
+  .title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  
+    /* Animación 2: Entra un poco después */
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0;
+    animation-delay: 0.2s;
+  }
+  
+  .brandHighlight {
+    background: linear-gradient(135deg, var(--color-primary-600) 0%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* Texto degradado moderno */
+    display: inline-block;
+  }
+  
+  .subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+  
+    /* Animación 3: Entra después del título */
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0;
+    animation-delay: 0.3s;
+  }
+  
+  /* --- BOTÓN CTA (Call to Action) --- */
+  .cta {
+    background-color: var(--color-primary-600);
+    color: #ffffff;
+    padding: 1rem 2.5rem;
+    border-radius: 9999px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-decoration: none;
+    
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 
+                0 4px 6px -4px rgba(37, 99, 235, 0.1);
+    
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  
+    /* Animación 4: Entra al final */
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0;
+    animation-delay: 0.4s;
+  }
+  
+  /* Efecto HOVER del botón */
+  .cta:hover {
+    transform: translateY(-3px) scale(1.02); /* Se levanta y crece un pelín */
+    background-color: var(--color-primary-700);
+    box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4), 
+                0 8px 10px -6px rgba(37, 99, 235, 0.1);
+  }
+  
+  .cta:active {
+    transform: translateY(-1px) scale(0.98); /* Rebote al hacer clic */
+  }
+  
+  /* RESPONSIVE: Ajustes para celular */
+  @media (max-width: 640px) {
+    .title {
+      font-size: 2.5rem; /* Título más pequeño en móvil */
+    }
+    .subtitle {
+      font-size: 1rem;
+      padding: 0 1rem;
+    }
+    .logoWrapper {
+      width: 100px;
+      height: 100px;
+    }
+  }
