@@ -30,8 +30,7 @@
 /* ✅ AJUSTE FINAL PARA MÓVIL */
 @media (max-width: 768px) {
   .footerContainer {
-    /* Antes era 80px, ahora lo igualamos a la altura de la barra (65px) */
-    /* Usamos calc() para sumar la zona segura en iPhones si es necesario */
+    /* Espacio vital para que el Menú Flotante no tape el footer */
     padding-bottom: calc(65px + env(safe-area-inset-bottom));
   }
 }

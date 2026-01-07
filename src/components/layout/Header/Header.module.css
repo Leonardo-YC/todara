@@ -1,18 +1,20 @@
+/* --- ESTILOS BASE (Desktop / PC) --- */
 .header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 40;
   border-bottom: 1px solid var(--color-border);
-  background-color: var(--color-bg-primary); 
+  background-color: var(--color-bg-primary);
   width: 100%;
-  height: 80px; /* Altura fija */
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  height: 80px;
+  transition: height 0.3s ease, background-color 0.3s ease;
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  /* Espacio lateral generoso en PC */
+  padding: 0 2rem;
   height: 100%;
   display: flex;
   align-items: center;
@@ -34,6 +36,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* ✅ PC: Logo grande (50px) */
+  width: 50px;
+  height: 50px;
+}
+
+.logoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .brandName {
@@ -41,6 +52,7 @@
   font-size: 1.5rem;
   color: var(--color-primary-600);
   letter-spacing: -0.025em;
+  display: block;
 }
 
 /* --- NAVEGACIÓN DERECHA --- */
@@ -58,7 +70,7 @@
   border-right: 1px solid var(--color-border);
 }
 
-/* --- PERFIL DE USUARIO (La parte importante) --- */
+/* --- PERFIL --- */
 .profileLink {
   text-decoration: none;
   color: var(--color-text-primary);
@@ -82,9 +94,9 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-text-primary);
+  display: block;
 }
 
-/* Botón de Login (cuando no hay sesión) */
 .loginBtn {
   background-color: var(--color-primary-600);
   color: #ffffff;
@@ -97,18 +109,33 @@
 }
 .loginBtn:hover { background-color: var(--color-primary-700); }
 
-/* --- RESPONSIVE (MÓVIL) --- */
+/* --- 📱 RESPONSIVE (MÓVIL) --- */
 @media (max-width: 768px) {
-  /* 1. Ocultar el nombre del usuario, dejar solo el avatar */
-  .userName {
-    display: none;
+  .header {
+    height: 60px;
   }
 
-  /* 2. Ocultar el texto "Todara" si falta espacio (opcional, aquí lo dejamos visible) */
-  /* .brandName { display: none; } */
+  .container {
+    /* ✅ MÓVIL: Ajustamos padding para que no toque los bordes */
+    padding: 0 1.25rem; 
+  }
 
-  /* 3. Ajustar espacios */
-  .container { padding: 0 1rem; }
-  .nav { gap: 0.5rem; }
-  .toggles { padding-right: 0.5rem; }
+  /* ✅ MÓVIL: Logo contenido en 30px */
+  .logoWrapper {
+    width: 35px; 
+    height: 35px;
+  }
+
+  /* Ocultamos textos */
+  .brandName { display: none; }
+  .userName { display: none; }
+
+  .toggles {
+    border-right: none;
+    padding-right: 0;
+    gap: 0.25rem;
+  }
+  
+  .nav { gap: 0.75rem; }
+  .userInfo { padding: 0; }
 }

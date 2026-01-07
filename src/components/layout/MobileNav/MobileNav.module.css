@@ -1,39 +1,72 @@
 .mobileNav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 65px;
-    background-color: var(--color-bg-primary);
-    border-top: 1px solid var(--color-border);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 50;
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px; /* Altura estándar de Apps */
   
-  @media (min-width: 768px) {
-    .mobileNav { display: none; }
-  }
+  /* Color de fondo semitransparente para efecto cristal */
+  background-color: var(--color-bg-primary); 
+  /* Si tus variables soportan transparencia usa rgba, si no, déjalo sólido o usa opacity en el .tsx */
   
-  .link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    width: 100%;
-    height: 100%;
-  }
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 50; /* Por encima de todo */
   
-  .active {
-    color: var(--color-primary-600);
-  }
+  /* ✅ CLAVE PARA IPHONE: Respeta la barra negra inferior */
+  padding-bottom: env(safe-area-inset-bottom);
+  height: calc(60px + env(safe-area-inset-bottom));
   
-  .label {
-    font-size: 0.65rem;
-    font-weight: 600;
+  /* Sombra suave hacia arriba */
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Efecto cristal (opcional, solo si el navegador lo soporta) */
+@supports (backdrop-filter: blur(10px)) {
+  .mobileNav {
+    background-color: rgba(255, 255, 255, 0.85); /* Blanco translúcido */
+    backdrop-filter: blur(12px);
   }
+}
+
+/* Ajuste oscuro para efecto cristal */
+:global(.dark) .mobileNav {
+  @supports (backdrop-filter: blur(10px)) {
+    background-color: rgba(15, 23, 42, 0.85); /* Oscuro translúcido */
+  }
+}
+
+@media (min-width: 768px) {
+  .mobileNav {
+    display: none;
+  }
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--color-text-tertiary, #94a3b8); /* Color inactivo más suave */
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  transition: color 0.2s ease, transform 0.1s;
+}
+
+.link:active {
+  transform: scale(0.95); /* Efecto de pulsación al tocar */
+}
+
+.active {
+  color: var(--color-primary-600);
+}
+
+.label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
