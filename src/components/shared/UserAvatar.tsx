@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
+import styles from './UserAvatar.module.css'; // ✅ Importamos
 
 interface UserAvatarProps {
   name?: string | null;
@@ -9,7 +10,6 @@ interface UserAvatarProps {
 }
 
 export function UserAvatar({ name, image, size = 32 }: UserAvatarProps) {
-  // Generar iniciales (Ej: Leonardo Yupan -> LY)
   const getInitials = (name: string) => {
     return name
       ?.split(' ')
@@ -19,7 +19,6 @@ export function UserAvatar({ name, image, size = 32 }: UserAvatarProps) {
       .toUpperCase() || 'U';
   };
 
-  // Generar color de fondo consistente basado en el nombre
   const getColor = (name: string) => {
     const colors = ['#ef4444', '#f97316', '#f59e0b', '#10b981', '#3b82f6', '#6366f1', '#8b5cf6', '#ec4899'];
     let hash = 0;
@@ -36,7 +35,7 @@ export function UserAvatar({ name, image, size = 32 }: UserAvatarProps) {
         alt={name || 'Avatar'}
         width={size}
         height={size}
-        style={{ borderRadius: '50%', objectFit: 'cover' }}
+        className={styles.image} // ✅ Usamos clase
       />
     );
   }
@@ -45,18 +44,13 @@ export function UserAvatar({ name, image, size = 32 }: UserAvatarProps) {
   
   return (
     <div
+      className={styles.avatar} // ✅ Estructura en CSS
       style={{
+        // Mantenemos SOLO lo que es 100% dinámico aquí
         width: size,
         height: size,
-        borderRadius: '50%',
         backgroundColor: getColor(safeName),
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         fontSize: size * 0.4,
-        fontWeight: 'bold',
-        userSelect: 'none',
       }}
     >
       {getInitials(safeName)}

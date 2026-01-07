@@ -1,0 +1,54 @@
+/* Animación de palpitación (Pulse) */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+  }
+  
+  /* Contenedor de lista */
+  .listContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  
+  /* Item individual del Todo */
+  .todoItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-bg-secondary); /* Usa tus variables globales */
+    border: 1px solid var(--color-border);
+  }
+  
+  /* Formulario */
+  .formSkeleton {
+    width: 100%;
+  }
+  
+  .inputSkeleton {
+    height: 3rem;
+    background-color: var(--color-border);
+    border-radius: 0.5rem;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  /* Partes internas del Todo */
+  .checkboxSkeleton {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: var(--color-border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .textSkeleton {
+    height: 1rem;
+    background-color: var(--color-border);
+    border-radius: 4px;
+    width: 75%; /* Simula texto */
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }

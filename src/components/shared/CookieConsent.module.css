@@ -1,0 +1,127 @@
+/* src/components/shared/CookieConsent.module.css */
+
+.banner {
+    /* ✅ POSICIÓN MÓVIL (Por defecto): Flotante abajo, ancho completo con margen */
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 100;
+    
+    /* ESTILO VISUAL (Glassmorphism - Isla Flotante) */
+    background-color: rgba(15, 23, 42, 0.9); /* Un poco más oscuro para legibilidad */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Animación suave */
+    animation: slideInCorner 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* En móvil: uno debajo del otro */
+    gap: 1rem;
+  }
+  
+  /* ✅ MEDIA QUERY PARA PC (Aquí recuperamos el diseño RECTANGULAR) */
+  @media (min-width: 768px) {
+    .banner {
+      /* 1. Ubicación: Izquierda */
+      left: 2rem;
+      bottom: 3.6rem;
+      right: auto; /* Soltamos la derecha */
+      
+      /* 2. FORMA: Forzamos que sea un rectángulo ancho */
+      width: auto;
+      min-width: 550px; /* ✅ Mínimo ancho para que no se haga cuadrado */
+      max-width: 800px; /* Tope para no cruzar toda la pantalla */
+    }
+  
+    .content {
+      /* 3. ALINEACIÓN: Todo en una sola fila horizontal (Texto ... Botones) */
+      flex-direction: row; 
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem; /* Espacio generoso entre texto y botones */
+    }
+    
+    .text {
+      text-align: left;
+      margin: 0;
+      flex: 1; /* El texto ocupa todo el espacio sobrante */
+    }
+  
+    .actions {
+      margin-top: 0;
+      flex-shrink: 0; /* Los botones no se aplastan */
+    }
+  }
+  
+  .text {
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    line-height: 1.5;
+    text-align: center; /* En móvil centrado */
+  }
+  
+  /* Botones */
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  
+  .acceptBtn {
+    background-color: #ffffff;
+    color: #0f172a;
+    border: none;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: transform 0.1s ease, background-color 0.2s;
+    white-space: nowrap;
+  }
+  
+  .acceptBtn:hover {
+    background-color: #f1f5f9;
+  }
+  
+  .acceptBtn:active {
+    transform: scale(0.95);
+  }
+  
+  .declineBtn {
+    background-color: transparent;
+    color: #94a3b8;
+    border: 1px solid #475569;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  
+  .declineBtn:hover {
+    color: #ffffff;
+    border-color: #cbd5e1;
+    background-color: rgba(255,255,255,0.05);
+  }
+  
+  /* Animación: Sube desde abajo */
+  @keyframes slideInCorner {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }

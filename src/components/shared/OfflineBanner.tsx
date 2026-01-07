@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { WifiOff } from 'lucide-react';
 import { useOnline } from '@/hooks/useOnline';
+import styles from './OfflineBanner.module.css'; // ✅ Importamos estilos
 
 export function OfflineBanner() {
   const t = useTranslations('offline');
@@ -14,7 +15,6 @@ export function OfflineBanner() {
     if (!isOnline) {
       setShowBanner(true);
     } else {
-      // Si vuelve internet, ocultamos el banner después de 3 segundos
       const timer = setTimeout(() => setShowBanner(false), 3000);
       return () => clearTimeout(timer);
     }
@@ -26,13 +26,12 @@ export function OfflineBanner() {
     <div
       role="status"
       aria-live="polite"
-      className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${
-        isOnline ? '-translate-y-full' : 'translate-y-0'
-      }`}
+      // ✅ Combinamos clases lógicamente
+      className={`${styles.banner} ${isOnline ? styles.hidden : styles.visible}`}
     >
-      <div className="bg-yellow-100 border-b border-yellow-200 text-yellow-800 px-4 py-3 shadow-md flex justify-center items-center gap-2">
+      <div className={styles.content}>
         <WifiOff size={18} />
-        <span className="text-sm font-medium">
+        <span className={styles.text}>
           {isOnline ? 'Conexión restaurada' : t('banner')}
         </span>
       </div>

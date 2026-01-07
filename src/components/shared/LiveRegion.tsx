@@ -1,9 +1,7 @@
-/**
- * LiveRegion - Anuncios dinámicos para lectores de pantalla
- */
 'use client';
 
 import { useEffect, useState } from 'react';
+import styles from './LiveRegion.module.css'; // ✅ Importamos estilos
 
 interface LiveRegionProps {
   message: string;
@@ -29,7 +27,8 @@ export function LiveRegion({
   }, [message, clearAfter]);
 
   return (
-    <div role="status" aria-live={politeness} aria-atomic="true" className="sr-only">
+    // ✅ Usamos la clase del módulo
+    <div role="status" aria-live={politeness} aria-atomic="true" className={styles.srOnly}>
       {currentMessage}
     </div>
   );
