@@ -75,7 +75,7 @@ function html(params: { url: string; host: string }) {
   const bgColor = "#f9fafb";
   
   // ✅ USAMOS TU LOGO DE VERCEL (Gmail necesita URL pública, no local)
-  const logoUrl = "https://todara.vercel.app/icons/icon-512x512.svg"; 
+  const logoUrl = "https://todara.vercel.app/icons/logo.png"; 
 
   return `
 <body style="background: ${bgColor}; margin: 0; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
