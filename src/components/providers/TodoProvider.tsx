@@ -1,9 +1,10 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+// ✅ 1. Importamos useCallback
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { Todo, TodoContextType, TodoFilter, TodoFormData } from '@/types';
 import { useOnline } from '@/hooks/useOnline';
-import { useTranslations } from 'next-intl'; // ✅ 1. Importar
+import { useTranslations } from 'next-intl';
 
 interface ExtendedTodoContextType extends TodoContextType {
   selectedDate: string;
@@ -16,7 +17,7 @@ interface ExtendedTodoContextType extends TodoContextType {
 const TodoContext = createContext<ExtendedTodoContextType | undefined>(undefined);
 
 export function TodoProvider({ children }: { children: React.ReactNode }) {
-  const t = useTranslations('errors'); // ✅ 2. Cargar traducciones de errores
+  const t = useTranslations('errors');
   
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<TodoFilter>('all');
@@ -48,8 +49,9 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // 2. Fetcher
-  const fetchTodos = async () => {
+  // ✅ 2. Fetcher (ENVUELTO EN useCallback)
+  // Esto evita que la función se re-cree en cada render, evitando bucles infinitos.
+  const fetchTodos = useCallback(async () => {
     setIsLoading(true);
     try {
       const res = await fetch('/api/todos'); 
@@ -59,15 +61,17 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (err) {
       console.error(err);
-      setError(t('loadFailed')); // ✅ Usar traducción
+      setError(t('loadFailed'));
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [t]); // 't' es una dependencia porque se usa dentro para el error
 
+  // ✅ 3. useEffect corregido
+  // Ahora podemos incluir fetchTodos sin miedo a bucles
   useEffect(() => {
     fetchTodos();
-  }, [isOnline]);
+  }, [isOnline, fetchTodos]);
 
   const addTodo = async (data: TodoFormData) => {
     const tempId = `temp-${Date.now()}`;
@@ -97,7 +101,7 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
 
     } catch (err) {
       setTodos((prev) => prev.filter((t) => t.id !== tempId));
-      setError(t('createFailed')); // ✅ Usar traducción
+      setError(t('createFailed'));
     }
   };
 
@@ -115,7 +119,7 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
         });
     } catch (error) {
         setTodos(prev => prev.map(t => t.id === id ? oldTodo : t));
-        setError(t('updateFailed')); // ✅ Usar traducción
+        setError(t('updateFailed'));
     }
   };
 
@@ -133,7 +137,7 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
       await fetchTodos();
     } catch (err) {
       setTodos(prevTodos);
-      setError(t('deleteFailed')); // ✅ Usar traducción
+      setError(t('deleteFailed'));
     }
   };
 

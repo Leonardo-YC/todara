@@ -51,7 +51,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const result = await transport.sendMail({
           to: identifier,
           from: provider.from, // Tomará el nombre "Todara" del .env
-          subject: `Inicia sesión en Todara 🐶`,
+          subject: `Inicia sesión en Todara`,
           text: text({ url, host }),
           html: html({ url, host }),
         });
