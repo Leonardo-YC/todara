@@ -1,20 +1,36 @@
-# 🐶 Todara (Todo Perfect)
+<div align="center">
+  <a href="https://todara.vercel.app/">
+    <img src="/public/icons/logo.svg" alt="Logo Todara" width="180" height="180">
+  </a>
 
-[![Lighthouse](https://img.shields.io/badge/Lighthouse-100%2F100-success?style=flat-square&logo=lighthouse)](https://pagespeed.web.dev/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+  <h1 align="center">🐶 Todara (Todo Perfect)</h1>
 
-> **[English]** A boutique task management app built with excellence in fundamentals: Accessibility, Performance, and Security.
->
-> **[Español]** Una aplicación de gestión de tareas "boutique" construida con excelencia en los fundamentos: Accesibilidad, Rendimiento y Seguridad.
+  <p align="center">
+    <strong>[English]</strong> A boutique task management app built with excellence in fundamentals: Accessibility, Performance, and Security.
+    <br />
+    <strong>[Español]</strong> Una aplicación de gestión de tareas "boutique" construida con excelencia en los fundamentos: Accesibilidad, Rendimiento y Seguridad.
+  </p>
+
+  <p align="center">
+    <a href="https://pagespeed.web.dev/">
+      <img src="https://img.shields.io/badge/Lighthouse-100%2F100-success?style=flat-square&logo=lighthouse" alt="Lighthouse Score" />
+    </a>
+    <a href="LICENSE">
+      <img src="https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square" alt="License GPLv3" />
+    </a>
+    <a href="https://nextjs.org/">
+      <img src="https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js" alt="Next.js" />
+    </a>
+    <a href="https://www.typescriptlang.org/">
+      <img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript" alt="TypeScript" />
+    </a>
+  </p>
+</div>
 
 ---
 
 ## 🚀 Live Demo / Demo en Vivo
 👉 **[https://todara.vercel.app/](https://todara.vercel.app/)**
-
-![App Screenshot](/public/icons/logo.svg)
 
 ---
 
@@ -34,7 +50,7 @@
 ## 🛠️ Tech Stack / Tecnologías
 
 * **Core:** Next.js 14 (App Router), React 18, TypeScript.
-* **Styling:** CSS Modules (Performance over utility-first), Tailwind CSS (Utilities).
+* **Styling:** CSS Modules (Performance & Scoped Styles).
 * **Database:** PostgreSQL (Prisma ORM).
 * **Auth:** Auth.js (NextAuth).
 * **Tools:** ESLint, Prettier, Husky (Git Hooks).
@@ -60,7 +76,7 @@ This project prioritizes "Web Vitals" and Security:
 
 1.  **Clone the repo / Clonar repositorio:**
     ```bash
-    git clone [https://github.com/tu-usuario/todara.git](https://github.com/tu-usuario/todara.git)
+    git clone [https://github.com/LeonardoYC/todara.git](https://github.com/LeonardoYC/todara.git)
     cd todara
     ```
 
@@ -82,9 +98,9 @@ This project prioritizes "Web Vitals" and Security:
 
 ## 📄 License / Licencia
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the **GNU General Public License v3.0**. See the [LICENSE](LICENSE) file for details.
 
-*Este proyecto está bajo la **Licencia MIT**. Ver el archivo [LICENSE](LICENSE) para más detalles.*
+*Este proyecto está bajo la **Licencia Pública General GNU v3.0**. Ver el archivo [LICENSE](LICENSE) para más detalles.*
 
 ---
 
