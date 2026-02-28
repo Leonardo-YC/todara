@@ -1,0 +1,11 @@
+{
+    "HomePage": {
+      "title": "Welcome to Todara",
+      "description": "Your high-availability Boutique task manager.",
+      "button": "Get Started"
+    },
+    "Common": {
+      "loading": "Loading...",
+      "error": "Something went wrong"
+    }
+  }

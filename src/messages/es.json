@@ -1,0 +1,11 @@
+{
+    "HomePage": {
+      "title": "Bienvenido a Todara",
+      "description": "Tu gestor de tareas Boutique de alta disponibilidad.",
+      "button": "Comenzar ahora"
+    },
+    "Common": {
+      "loading": "Cargando...",
+      "error": "Algo salió mal"
+    }
+  }
