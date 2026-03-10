@@ -7,6 +7,7 @@ import { ArrowRight, CheckCircle2, Zap, Shield, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MascotFeedback from '@/components/shared/MascotFeedback';
 import { useTranslations } from 'next-intl';
+import { InstallGuide } from '@/components/layout/InstallGuide'; // 🔥 IMPORTAMOS LA GUÍA
 
 export default function LandingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = use(params);
@@ -19,7 +20,7 @@ export default function LandingPage({ params }: { params: Promise<{ locale: stri
 
   return (
     <main className="overflow-x-hidden">
-      <section className="px-6 pt-12 pb-20 md:pt-20 md:pb-32 text-center">
+      <section className="px-6 pt-6 pb-20 md:pt-10 md:pb-32 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -104,6 +105,10 @@ export default function LandingPage({ params }: { params: Promise<{ locale: stri
           </div>
         </div>
       </section>
+
+      {/* 🔥 NUEVA SECCIÓN: Guía de Instalación */}
+      <InstallGuide />
+
     </main>
   );
 }

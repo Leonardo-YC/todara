@@ -1,30 +1,58 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server'; // 🔥 SEO: Añadimos getTranslations
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/components/shared/theme-provider';
-import { PwaRegistry } from '@/components/shared/PwaRegistry'; // 🔥 PWA: 1. Importamos el activador
-import type { Metadata, Viewport } from 'next'; // 🔥 PWA: 2. Importamos los tipos
+import { PwaRegistry } from '@/components/shared/PwaRegistry'; 
+import { CookieBanner } from '@/components/shared/CookieBanner'; 
+import type { Metadata, Viewport } from 'next'; 
 import '@/app/globals.css';
 
-// 🔥 PWA: 3. Metadatos PWA requeridos por los celulares y PC
-export const metadata: Metadata = {
-  title: 'Todara',
-  description: 'Boutique Productivity',
-  manifest: '/manifest.json',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'black-translucent', // Cambiado para mejor apariencia
-    title: 'Todara',
-  },
-  // Añade estos meta tags importantes
-  other: {
-    'mobile-web-app-capable': 'yes',
-  },
-};
+// 🔥 SEO: Generación dinámica de Metadatos según el idioma
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: Promise<{ locale: string }> 
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
 
-// 🔥 PWA: 4. Control de zoom para que se sienta como App nativa
+  return {
+    // 🔥 FIX: Base URL para que las imágenes de redes sociales (OpenGraph) se generen bien y quite el warning
+    metadataBase: new URL('https://todara.vercel.app'),
+    
+    title: t('title'),
+    description: t('description'),
+    manifest: '/manifest.json',
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'black-translucent',
+      title: 'Todara',
+    },
+    other: {
+      'mobile-web-app-capable': 'yes',
+    },
+    // 🔥 OG Tags para que se vea hermoso al compartir el link en WhatsApp/Twitter
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      url: 'https://todara.vercel.app', // Cambia esto por tu dominio real si tienes otro
+      siteName: 'Todara',
+      images: [
+        {
+          url: '/logos/logo-todara-512.png',
+          width: 512,
+          height: 512,
+        },
+      ],
+      locale: locale,
+      type: 'website',
+    },
+  };
+}
+
+// 🔥 PWA: Control de zoom para que se sienta como App nativa
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
@@ -61,8 +89,10 @@ export default async function LocaleLayout({
         >
           <NextIntlClientProvider messages={messages}>
             {children}
+            {/* 🔥 COOKIES: Renderizamos el banner aquí, flotará por encima de todo */}
+            <CookieBanner /> 
             <Toaster position="bottom-right" richColors theme="system" />
-            <PwaRegistry /> {/* 🔥 PWA: 5. Encendemos el modo offline */}
+            <PwaRegistry /> {/* 🔥 PWA: Encendemos el modo offline */}
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
