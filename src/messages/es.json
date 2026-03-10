@@ -210,5 +210,24 @@
     "delete": "Eliminar",
     "toastDeleting": "Eliminando carpeta...",
     "toastDeleted": "Carpeta \"{name}\" eliminada"
+  },
+  "CookieBanner": {
+    "title": "Uso de Cookies",
+    "description": "Utilizamos cookies técnicas estrictamente necesarias para mantener tu sesión activa y segura. No usamos cookies de rastreo o publicidad.",
+    "accept": "Aceptar"
+  },
+  "Metadata": {
+    "title": "Todara | La Productividad es un Arte",
+    "description": "Organiza tu vida con estilo. Todara es tu espacio personal boutique, vigilado por Sofi, diseñado para alcanzar tu máximo potencial."
+  },
+  "Installation": {
+    "title": "Todara en todos tus dispositivos",
+    "description": "Nuestra tecnología PWA te permite instalar Todara sin pasar por la App Store.",
+    "step1Title": "En tu Computadora",
+    "step1Desc": "Busca el icono de 'Instalar' (⊕) en la barra de direcciones de Chrome o Edge.",
+    "step2Title": "En tu Celular",
+    "step2Desc": "Toca 'Compartir' y luego elige 'Añadir a la pantalla de inicio'.",
+    "offlineTitle": "Modo Offline",
+    "offlineDesc": "Sofi guarda tus tareas aunque pierdas la conexión. Se sincronizarán con la nube apenas vuelvas a tener internet."
   }
 }
