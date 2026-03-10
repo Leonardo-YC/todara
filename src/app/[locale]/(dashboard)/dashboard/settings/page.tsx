@@ -6,10 +6,11 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { LogOut, User, Palette, ShieldAlert, CheckCircle2 } from 'lucide-react';
 import { signOut } from '@/lib/auth/auth';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server'; // 🔥 FIX: Importamos getLocale
 
 export default async function SettingsPage() {
   const t = await getTranslations('Settings');
+  const locale = await getLocale(); // 🔥 FIX: Obtenemos el idioma actual
   const session = await auth();
 
   // 🔥 Lógica de Iniciales: Tamaño ajustado para ser elegante, no excesivo
@@ -115,7 +116,8 @@ export default async function SettingsPage() {
             <form
               action={async () => {
                 'use server';
-                await signOut();
+                // 🔥 FIX: Le decimos a Auth.js que te mande a la Landing al salir
+                await signOut({ redirectTo: `/${locale}` });
               }}
               className="w-full sm:w-auto"
             >
