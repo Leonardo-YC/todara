@@ -1,11 +1,214 @@
 {
-    "HomePage": {
-      "title": "Welcome to Todara",
-      "description": "Your high-availability Boutique task manager.",
-      "button": "Get Started"
+  "Common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "success": "Success",
+    "back": "Back",
+    "mascotName": "Sofi",
+    "userFallback": "Todara User",
+    "toastConnError": "Connection error"
+  },
+  "Landing": {
+    "badge": "Productivity is an Art",
+    "titleMain": "Organize your life with",
+    "titleStyle": "style.",
+    "description": "Todara is your boutique personal space, watched over by Sofi, designed to reach your full potential without losing elegance.",
+    "buttonStart": "Get Started",
+    "buttonFeatures": "View Features",
+    "mascotWait": "Sofi is waiting",
+    "featuresTitle": "Why choose Todara?",
+    "feat1Title": "Extreme Speed",
+    "feat1Desc": "Seamless interface built on Next.js 15 and Neon DB for an instant response.",
+    "feat2Title": "Total Organization",
+    "feat2Desc": "Classify your projects into folders with exclusive colors for your workflow.",
+    "feat3Title": "Boutique Privacy",
+    "feat3Desc": "Your data is sacred. Encryption and absolute control in every task.",
+    "footer": "© 2026 TODARA • BOUTIQUE PRODUCTIVITY"
+  },
+  "About": {
+    "badge": "Our Essence",
+    "titleMain": "Where order",
+    "titleStyle": "meets art.",
+    "description": "Todara wasn't born to be \"another\" task app. It was born to be your digital sanctuary. We believe an organized mind deserves a beautiful environment.",
+    "sofiTitle": "Sofi: Your Guardian",
+    "sofiDesc": "More than a mascot, Sofi is your success barometer. Inspired by the noble vigilance of the Schnauzer, she lives and breathes with your productivity. Her mood reflects your commitment to your own goals.",
+    "missionTitle": "Todara Mission",
+    "missionDesc": "We want to eliminate digital noise. We combine technical power with a minimalist interface so your only worry is creating, not managing.",
+    "ctaTitle": "Your new chapter starts today.",
+    "ctaButton": "Start my Journey"
+  },
+  "Privacy": {
+    "titleMain": "Boutique",
+    "titleStyle": "Privacy.",
+    "subtitle": "Your peace of mind is our highest quality standard.",
+    "sec1Title": "1. Transparent Data Collection",
+    "sec1Desc": "To operate Todara efficiently, we exclusively collect information provided by your identity providers (Google or GitHub): full name, email address, and avatar. We do not track your activity outside our platform or collect biometric or sensitive data.",
+    "sec2Title": "2. Secure Infrastructure",
+    "sec2Desc": "Your data and tasks are securely stored in high-tech servers that comply with international security standards (SOC2, ISO 27001). We never share or sell your information to advertisers.",
+    "sec3Title": "3. Absolute Control",
+    "sec3Desc": "As a Todara user, you have the absolute right to access, rectify, or delete your data at any time. By deleting your account from settings, our system permanently deletes all your information from our servers.",
+    "cookiesTitle": "Cookie Usage",
+    "cookiesDesc": "We use strictly necessary technical cookies to keep your session active. We do not use third-party advertising cookies."
+  },
+  "Terms": {
+    "titleMain": "Legal",
+    "titleStyle": "Agreement.",
+    "subtitle": "Clear rules for an impeccable workflow.",
+    "sec1Title": "1. Acceptance of Service",
+    "sec1Desc": "By accessing Todara, the user agrees to be bound by these terms of service. This software is provided \"as is\", focused on managing personal tasks. The visual assistant (Sofi) has a purely aesthetic and motivational function.",
+    "sec2Title": "2. Limited Liability",
+    "sec2Desc": "Todara uses cutting-edge technology to ensure service availability. However, we are not responsible for data loss resulting from external service failures or user negligence. It is recommended not to store critical, financial, or sensitive medical information on the platform.",
+    "sec3Title": "3. Intellectual Property",
+    "sec3Desc": "All visual components, mascot animations, and software architecture are the property of Todara. Total or partial reproduction for commercial purposes without express authorization is prohibited.",
+    "footerRevision": "Version 1.0.0 — 2026 Review",
+    "footerButton": "Get to know our story"
+  },
+  "Offline": {
+    "title": "Sofi lost the signal",
+    "description": "We need an internet connection to sync your tasks securely.",
+    "button": "Retry Connection"
+  },
+  "NotFound": {
+    "title": "404 Error.",
+    "subtitle": "Sofi can't find this page!",
+    "desc": "It seems you've lost your way. Todara's Schnauzer looked everywhere, but there's nothing here.",
+    "buttonTasks": "Go to my Tasks"
+  },
+  "Tasks": {
+    "title": "My Tasks",
+    "description": "Manage your productivity. You have {count} pending.",
+    "inboxTitle": "Inbox",
+    "emptyTitle": "No pending tasks",
+    "emptySubtitle": "Everything is up to date, Sofi is happy!",
+    "completedTitle": "Completed ({count})"
+  },
+  "Settings": {
+    "title": "Settings",
+    "description": "Manage your preferences and your Todara account identity.",
+    "profileTitle": "Profile",
+    "profileDesc": "Information linked to your access account.",
+    "verifiedBadge": "Verified Account",
+    "appearanceTitle": "Appearance & Language",
+    "appearanceDesc": "Customize how you interact with Todara.",
+    "colorMode": "Color Mode",
+    "colorModeDesc": "Toggle between light or dark mode.",
+    "language": "Language",
+    "languageDesc": "Change the platform language in real time.",
+    "secureSession": "Secure Session",
+    "secureSessionDesc": "Your session is protected. Upon signing out, you will need to use a new Magic Link.",
+    "logout": "Sign Out"
+  },
+  "Categories": {
+    "title": "My Folders",
+    "description": "Organize your projects in custom spaces.",
+    "emptyState": "You don't have any folders yet. Create one to start organizing your life."
+  },
+  "Sidebar": {
+    "tasks": "My Tasks",
+    "folders": "Folders",
+    "calendar": "Calendar",
+    "settings": "Settings"
+  },
+  "Navbar": {
+    "signin": "Sign In",
+    "enter": "Enter"
+  },
+  "Footer": {
+    "about": "About Us",
+    "terms": "Terms",
+    "privacy": "Privacy"
+  },
+  "TaskDialog": {
+    "new": "New Task",
+    "edit": "Edit Task",
+    "titleLabel": "Title",
+    "titlePlaceholder": "E.g.: Buy groceries...",
+    "titleError": "Minimum 2 characters",
+    "categoryLabel": "Folder / Project",
+    "noCategory": "No folder",
+    "dueDateLabel": "Due Date",
+    "priorityLabel": "Priority",
+    "priorityLow": "Low",
+    "priorityMedium": "Medium",
+    "priorityHigh": "High",
+    "save": "Save Task",
+    "update": "Update",
+    "processing": "Processing...",
+    "toastSaving": "Saving task...",
+    "toastUpdating": "Updating task...",
+    "toastSaved": "Task saved",
+    "toastUpdated": "Task updated",
+    "toastError": "An error occurred"
+  },
+  "TaskItem": {
+    "toastDeleting": "Deleting task...",
+    "toastDeleted": "🗑️ Task deleted"
+  },
+  "CategoryDialog": {
+    "new": "New Folder",
+    "title": "Create Folder",
+    "description": "Give your new project a unique identity.",
+    "nameLabel": "Name",
+    "namePlaceholder": "E.g.: University...",
+    "nameError": "Minimum 2 characters",
+    "colorLabel": "Tag color",
+    "save": "Save Folder",
+    "toastSuccess": "Folder created!",
+    "toastError": "There was a problem creating the folder",
+    "toastConnError": "Critical connection error"
+  },
+  "Actions": {
+    "unauthorized": "Unauthorized. Please sign in.",
+    "invalidData": "Invalid or incomplete data.",
+    "tasks": {
+      "createError": "Could not save the task.",
+      "updateError": "Could not update the task.",
+      "deleteError": "Could not delete the task."
     },
-    "Common": {
-      "loading": "Loading...",
-      "error": "Something went wrong"
+    "categories": {
+      "createError": "Could not create the folder.",
+      "updateError": "Could not update the folder.",
+      "deleteError": "Could not delete the folder."
     }
+  },
+  "Auth": {
+    "signInTitle": "Welcome",
+    "signInSubtitle": "Access your productivity sanctuary.",
+    "magicLinkDivider": "Or with Magic Link",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "name@example.com",
+    "sendMagicLink": "Send Magic Link",
+    "legalStart": "By continuing, you agree to our ",
+    "legalTerms": "Terms of Service",
+    "legalAnd": " and our ",
+    "legalPrivacy": "Privacy Policy",
+    "verifyTitle": "Check your email",
+    "verifySubtitle": "We have sent you a magic login link.",
+    "verifyDesc": "Click the button in the email to sign in. If it doesn't appear, wait a minute or check your spam folder.",
+    "verifyBack": "Back to home",
+    "errorTitle": "Access Error",
+    "errorSubtitle": "Sofi couldn't complete the login.",
+    "errorDesc": "A technical problem occurred. Please try again or use another method.",
+    "errorButton": "Try again"
+  },
+  "Layout": {
+    "mascotProgress": "Mascot in progress...",
+    "menuTitle": "Menu"
+  },
+  "Calendar": {
+    "title": "Calendar",
+    "description": "Visualize all your tasks over time.",
+    "emptyState": "No scheduled dates",
+    "overdue": "Overdue",
+    "today": "Today",
+    "upcoming": "Upcoming",
+    "noTasksInSection": "No pending tasks here."
+  },
+  "CategoryItem": {
+    "tasksCount": "{count, plural, =1 {task} other {tasks}}",
+    "editSoon": "Edit (Coming Soon)",
+    "delete": "Delete",
+    "toastDeleting": "Deleting folder...",
+    "toastDeleted": "Folder \"{name}\" deleted"
   }
+}
