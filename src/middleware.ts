@@ -22,11 +22,11 @@ export default auth((req) => {
 
   const isLoggedIn = !!req.auth;
 
-  // 🔥 CONSEJO PROFESIONAL: Auto-Redirección desde Landing a Dashboard
-  // Si el usuario está logueado e intenta entrar a la Landing (/, /es, /en)
+  // 🔥 MEJORA PROFESIONAL: Auto-Redirección desde Landing O Auth hacia Dashboard
   const isLandingPage = pathname === '/' || pathname === `/${locale}` || pathname === `/${locale}/`;
+  const isAuthPage = pathname.includes('/signin') || pathname.includes('/verify'); // Detectamos páginas de login
   
-  if (isLandingPage && isLoggedIn) {
+  if ((isLandingPage || isAuthPage) && isLoggedIn) {
     return NextResponse.redirect(new URL(`/${locale}/dashboard/tasks`, req.url));
   }
 
