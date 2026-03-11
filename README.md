@@ -55,4 +55,4 @@ Todara is currently in its **MVP (Minimum Viable Product)** phase. **Future upda
 Actualmente, Todara se encuentra en su fase **MVP (Producto Mínimo Viable)**. **Las futuras actualizaciones, nuevas funciones (como colaboración o IA) y los posibles planes premium estarán impulsados estrictamente por el uso real y los comentarios de nuestra comunidad.** Construimos lo que realmente necesitas.
 
 ---
-*Designed with ♥️ by Leonardo.*
+*✨ Designed with ♥️ by [Leonardo-YC](https://github.com/Leonardo-YC) — Explore more of my work!*
