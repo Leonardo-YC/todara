@@ -1,58 +1,175 @@
-# 🐾 Todara | Boutique Productivity
+<div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+<img src="public/logos/todara-email.png" alt="Todara Logo" width="120" />
 
-*For the Spanish version, scroll down. / Para la versión en español, desplázate hacia abajo.*
+# Todara | Boutique Productivity
 
----
+**Gestor de tareas emocional y elegante, diseñado para que la productividad no sea aburrida.**
 
-## 🇺🇸 English Version
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=nextdotjs)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript)](https://typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8?logo=tailwindcss)](https://tailwindcss.com)
+[![Auth.js](https://img.shields.io/badge/Auth.js-v5-purple?logo=nextdotjs)](https://authjs.dev/)
+[![Neon DB](https://img.shields.io/badge/Neon-Serverless-00e599?logo=postgresql)](https://neon.tech)
+[![License](https://img.shields.io/badge/License-Proprietary-red)](LICENSE)
 
-**Todara** is a "Boutique" task manager designed to solve real productivity problems through an emotional, elegant, and highly responsive interface. Guarded by **Sofi** (our interactive Schnauzer mascot), Todara proves that productivity doesn't have to be boring.
+[Demo en vivo](https://todara.vercel.app) · [Reportar bug](https://github.com/Leonardo-YC/todara/issues)
 
-### ✨ Key Features
-* **100% Passwordless Authentication:** Secure access via Google, GitHub, or Magic Links (Auth.js v5).
-* **Progressive Web App (PWA):** Installable on any mobile device or desktop without going through app stores.
-* **Offline Mode:** Create and view tasks even without an internet connection. Sofi will sync them when you're back online.
-* **Optimistic UI:** Lightning-fast interactions. Tasks update instantly on the screen before the database confirms them.
-* **Boutique Design:** Dark/Light mode, beautifully crafted with Tailwind CSS and Shadcn/UI.
-* **Bilingual:** Fully translated into English and Spanish (Next-Intl).
+*For the English version, check the source code / Para la versión en inglés, revisa el código fuente.*
 
-### 🛠️ Tech Stack
-* **Framework:** Next.js 15 (React 19)
-* **Language:** TypeScript (Strict Mode)
-* **Database:** Neon DB (Serverless PostgreSQL) + Drizzle ORM
-* **Styling:** Tailwind CSS + Framer Motion
-* **Architecture:** Clean Architecture adapted for Server Actions.
-
-### 🚀 The Future of Todara
-Todara is currently in its **MVP (Minimum Viable Product)** phase. **Future updates, new features (such as collaboration or AI integration), and potential premium tiers will be strictly driven by user feedback and real-world usage.** We are building what you actually need.
+</div>
 
 ---
 
-## 🇪🇸 Versión en Español
+## 📖 Descripción
 
-**Todara** es un gestor de tareas "Boutique" diseñado para resolver problemas reales de productividad mediante una interfaz emocional, elegante y altamente responsiva. Vigilado por **Sofi** (nuestra mascota Schnauzer interactiva), Todara demuestra que la productividad no tiene que ser aburrida.
+**Todara** es un MVP (Producto Mínimo Viable) de gestión de tareas "Boutique" construido para resolver problemas reales de productividad mediante una interfaz emocional, elegante y altamente responsiva.
 
-### ✨ Características Principales
-* **Autenticación sin Contraseñas:** Acceso ultra seguro vía Google, GitHub o Magic Links (Auth.js v5).
-* **Progressive Web App (PWA):** Instalable en cualquier celular o PC sin pasar por las tiendas de aplicaciones.
-* **Modo Offline:** Crea y revisa tareas incluso sin conexión a internet. Sofi las sincronizará cuando vuelvas a estar en línea.
-* **Optimistic UI:** Interacciones a la velocidad de la luz. Las tareas se actualizan al instante en la pantalla antes de que la base de datos lo confirme.
-* **Diseño Boutique:** Modo Oscuro/Claro, diseñado meticulosamente con Tailwind CSS y Shadcn/UI.
-* **Bilingüe:** Totalmente traducido al Inglés y Español (Next-Intl).
-
-### 🛠️ Tecnologías Utilizadas
-* **Framework:** Next.js 15 (React 19)
-* **Lenguaje:** TypeScript (Modo Estricto)
-* **Base de Datos:** Neon DB (PostgreSQL Serverless) + Drizzle ORM
-* **Estilos:** Tailwind CSS + Framer Motion
-* **Arquitectura:** Arquitectura Limpia (Clean Architecture) adaptada para Server Actions.
-
-### 🚀 El Futuro de Todara
-Actualmente, Todara se encuentra en su fase **MVP (Producto Mínimo Viable)**. **Las futuras actualizaciones, nuevas funciones (como colaboración o IA) y los posibles planes premium estarán impulsados estrictamente por el uso real y los comentarios de nuestra comunidad.** Construimos lo que realmente necesitas.
+Vigilado por **Sofi** (nuestra mascota Schnauzer interactiva que reacciona a tus acciones), Todara demuestra que organizar tu día a día puede ser una experiencia premium. El proyecto destaca por su arquitectura moderna, utilizando Server Actions, PWA instalable y un sistema de autenticación "Passwordless" de vanguardia.
 
 ---
-*✨ Designed with ♥️ by [Leonardo-YC](https://github.com/Leonardo-YC) — Explore more of my work!*
+
+## ✨ Características Principales
+
+* **Autenticación "Passwordless" (Auth.js v5)** — Acceso ultra seguro mediante Google, GitHub o Magic Links (enviados vía Nodemailer/Gmail SMTP). ¡Cero contraseñas!
+* **Progressive Web App (PWA)** — Instalable de forma nativa en iOS, Android o Desktop sin pasar por tiendas de aplicaciones.
+* **Modo Offline & Sincronización** — Crea y revisa tareas incluso sin conexión a internet. Sofi las sincronizará automáticamente cuando vuelvas a estar en línea.
+* **Optimistic UI (Framer Motion)** — Interacciones a la velocidad de la luz. Las tareas se actualizan visualmente al instante, antes de que la base de datos (Neon) confirme la acción.
+* **Diseño Boutique & Temas** — Interfaz meticulosamente diseñada con Tailwind CSS y Shadcn/UI, soportando Modo Oscuro/Claro de forma nativa.
+* **Soporte Bilingüe (Next-Intl)** — Aplicación 100% traducida y enrutada en Inglés y Español.
+* **Mascota Interactiva** — Sofi proporciona feedback emocional basado en el estado de la aplicación (carga, éxito, error, espera).
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Capa                     | Tecnología                               |
+| ------------------------ | ---------------------------------------- |
+| **Framework**            | Next.js 15 (React 19, App Router)        |
+| **Lenguaje**             | TypeScript (Modo Estricto)               |
+| **Estilos**              | Tailwind CSS + Shadcn/UI + Framer Motion |
+| **Autenticación**        | Auth.js v5 (NextAuth)                    |
+| **Base de Datos**        | Neon DB (PostgreSQL Serverless)          |
+| **ORM**                  | Drizzle ORM                              |
+| **Internacionalización** | Next-Intl                                |
+| **Emails (Magic Links)** | Nodemailer + Gmail SMTP                  |
+| **Hosting**              | Vercel                                   |
+
+---
+
+## 🚀 Instalación y Desarrollo Local
+
+### Requisitos previos
+
+* Node.js 20+
+* Cuenta en [Neon](https://neon.tech) (PostgreSQL serverless)
+* Credenciales OAuth de Google Cloud Console y GitHub Developer Settings
+* App Password de Gmail (para Nodemailer)
+
+---
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/Leonardo-YC/todara.git
+cd todara
+npm install
+```
+
+---
+
+### 2. Configurar variables de entorno
+
+Crea un archivo `.env.local` en la raíz:
+
+```env
+# ── Base de Datos (Neon) ─────────────────────────
+DATABASE_URL=postgresql://...
+
+# ── Auth.js v5 ───────────────────────────────────
+AUTH_SECRET=tu-secreto-super-seguro
+AUTH_URL=http://localhost:3000
+
+# ── Proveedores OAuth ────────────────────────────
+AUTH_GOOGLE_ID=...
+AUTH_GOOGLE_SECRET=...
+AUTH_GITHUB_ID=...
+AUTH_GITHUB_SECRET=...
+
+# ── Magic Links (Nodemailer) ─────────────────────
+EMAIL_SERVER_USER=tu-correo@gmail.com
+EMAIL_SERVER_PASSWORD=xxxx xxxx xxxx xxxx
+EMAIL_FROM=Todara <tu-correo@gmail.com>
+```
+
+---
+
+### 3. Migraciones de Base de Datos
+
+```bash
+npx drizzle-kit push
+```
+
+---
+
+### 4. Iniciar el servidor
+
+```bash
+npm run dev
+```
+
+Abre http://localhost:3000 en tu navegador para ver a Sofi en acción.
+
+---
+
+## 🗺️ Estructura del Proyecto (Clean Architecture)
+
+```plaintext
+todara/
+├── src/
+│   ├── app/
+│   │   ├── [locale]/
+│   │   │   ├── (auth)
+│   │   │   ├── (dashboard)
+│   │   │   ├── (public)
+│   │   │   └── layout.tsx
+│   ├── components/
+│   │   ├── layout/
+│   │   ├── shared/
+│   │   └── ui/
+│   ├── i18n/
+│   └── lib/
+│       ├── auth/
+│       └── db/
+├── messages/
+├── public/
+└── middleware.ts
+```
+
+---
+
+## 🔮 El Futuro de Todara
+
+Actualmente, Todara se encuentra en su fase MVP. Fiel a la filosofía **"Viviendo el proceso"**, las futuras actualizaciones (como colaboración en tiempo real o integración de IA) estarán impulsadas estrictamente por el uso real y el feedback de la comunidad.
+
+---
+
+## 📄 Licencia
+
+Este proyecto es de uso personal y demostrativo. Consulta el archivo `LICENSE` para más detalles.
+
+---
+
+## 🧑‍💻 Autor
+
+**Leonardo Yupán Cruz**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Leonardo--YC-181717?logo=github)](https://github.com/Leonardo-YC)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Leonardo-0a66c2?logo=linkedin)](https://www.linkedin.com/in/leonardo-yupán-crúz-4b7158336/)
+[![Instagram](https://img.shields.io/badge/Instagram-_leoyc-e4405f?logo=instagram)](https://www.instagram.com/_leoyc/)
+
+---
+
+<div align="center">
+<sub>✨ Diseñado con ❤️ para la comunidad tech · © 2026 Leonardo-YC</sub>
+</div>
